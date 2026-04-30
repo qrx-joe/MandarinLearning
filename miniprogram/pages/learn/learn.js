@@ -269,11 +269,11 @@ Page({
       url: url,
       timeout: 10000,
       success: (res) => {
-        console.log('Download result:', res.statusCode, res.tempFilePath)
-        if (res.statusCode === 200) {
+        console.log('Download result:', res.errMsg, res.tempFilePath)
+        if (res.tempFilePath) {
           this.playLocalFile(res.tempFilePath, text)
         } else {
-          console.error('Download status not 200:', res.statusCode)
+          console.error('Download failed: no tempFilePath', res)
           wx.hideLoading()
           this.showReadAloudFallback(text)
         }
@@ -282,6 +282,9 @@ Page({
         console.error('DownloadFile fail:', err)
         wx.hideLoading()
         this.showReadAloudFallback(text)
+      },
+      complete: () => {
+        wx.hideLoading()
       }
     })
   },
