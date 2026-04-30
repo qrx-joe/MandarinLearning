@@ -1,0 +1,85 @@
+<view class="container">
+  <!-- 顶部欢迎区 -->
+  <view class="welcome-card card">
+    <text class="greeting">{{greeting}}</text>
+    <text class="date">{{todayDate}}</text>
+    <view class="streak-row" wx:if="{{streakDays > 0}}">
+      <text class="streak-text">连续打卡 {{streakDays}} 天 🔥</text>
+    </view>
+    <view class="streak-row" wx:else>
+      <text class="streak-text text-secondary">今天开始你的普通话学习吧</text>
+    </view>
+  </view>
+
+  <!-- 今日任务卡片 -->
+  <view class="task-card card" wx:if="{{!todayDone}}">
+    <view class="task-header">
+      <text class="task-title">今天第 {{dayIndex}} 天</text>
+    </view>
+    <text class="task-desc">{{dailyContent.title || '慢速词语跟读 → 日常短句 → 流利度挑战'}}</text>
+    
+    <view class="progress-section">
+      <view class="progress-bar-bg">
+        <view class="progress-bar-fill" style="width: 0%"></view>
+      </view>
+      <text class="progress-text">目标：10 分钟</text>
+    </view>
+    
+    <button class="btn-primary start-btn" bindtap="startLearning">
+      开始学习
+    </button>
+    <text class="btn-hint">点这里开始今天的发音练习</text>
+  </view>
+
+  <!-- 已完成状态 -->
+  <view class="done-card card" wx:if="{{todayDone}}">
+    <text class="done-icon">✅</text>
+    <text class="done-title">今日已完成！</text>
+    <text class="done-subtitle">打卡成功，明天继续加油</text>
+    
+    <view class="done-stats">
+      <view class="stat-item">
+        <text class="stat-value">{{todayMinutes}}</text>
+        <text class="stat-label">分钟</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{streakDays}}</text>
+        <text class="stat-label">连续</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{totalDays}}</text>
+        <text class="stat-label">累计</text>
+      </view>
+    </view>
+    
+    <button class="btn-secondary" bindtap="reviewToday">复习今日内容</button>
+  </view>
+
+  <!-- 本周主题 -->
+  <view class="theme-card card">
+    <view class="theme-header">
+      <text class="theme-title">本周主题</text>
+      <text class="theme-week">第 {{currentWeek}} 周</text>
+    </view>
+    <text class="theme-name">{{weeklyTheme.name}}</text>
+    <text class="theme-desc">{{weeklyTheme.desc}}</text>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="quick-card card">
+    <view class="quick-grid">
+      <view class="quick-item" bindtap="goCalendar">
+        <view class="quick-icon-bg">📅</view>
+        <text class="quick-label">打卡日历</text>
+      </view>
+      <view class="quick-item" bindtap="goDashboard" wx:if="{{isSupervisor}}">
+        <view class="quick-icon-bg">👨‍👩‍👧</view>
+        <text class="quick-label">家庭看板</text>
+      </view>
+      <view class="quick-item" bindtap="goSettings">
+        <view class="quick-icon-bg">⚙️</view>
+        <text class="quick-label">设置</text>
+      </view>
+    </view>
+  </view>
+</view>

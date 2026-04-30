@@ -1,0 +1,248 @@
+/* 仪表盘 - 长辈友好风格 */
+
+.family-header {
+  display: flex;
+  align-items: center;
+  gap: 30rpx;
+  padding: 48rpx 36rpx;
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+  color: white;
+  margin-bottom: 24rpx;
+  border-radius: 28rpx;
+}
+
+.family-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-icon {
+  font-size: 60rpx;
+}
+
+.family-info {
+  flex: 1;
+}
+
+.family-name {
+  font-size: 40rpx;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.family-stats {
+  display: flex;
+  gap: 16rpx;
+}
+
+.stat-badge {
+  background: rgba(255,255,255,0.25);
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 26rpx;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80rpx 40rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.empty-title {
+  font-size: 36rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.empty-desc {
+  font-size: 30rpx;
+  color: #999;
+}
+
+.alert-card {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 32rpx;
+  background: #FFF5F5;
+  border: 3rpx solid #FFCCCC;
+  border-radius: 24rpx;
+  margin: 0 32rpx 24rpx;
+}
+
+.alert-icon {
+  font-size: 48rpx;
+}
+
+.alert-content {
+  flex: 1;
+}
+
+.alert-title {
+  font-size: 32rpx;
+  color: #FF4444;
+  font-weight: 600;
+  display: block;
+}
+
+.alert-desc {
+  font-size: 28rpx;
+  color: #999;
+  margin-top: 8rpx;
+  display: block;
+}
+
+.btn-remind {
+  background: #FF6B6B;
+  color: white;
+  font-size: 28rpx;
+  padding: 16rpx 30rpx;
+  border-radius: 12rpx;
+  margin: 0;
+  line-height: 1.5;
+  border: none;
+}
+
+.btn-remind::after {
+  border: none;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28rpx;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1A1A1A;
+}
+
+.section-sub {
+  font-size: 30rpx;
+  color: #FF6B6B;
+  font-weight: 600;
+}
+
+.week-grid {
+  display: flex;
+  justify-content: space-between;
+}
+
+.week-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.week-label {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.week-dot {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: #F0E6E0;
+  border: 4rpx solid #ddd;
+}
+
+.week-dot.done {
+  background: #4CD964;
+  border-color: #4CD964;
+}
+
+.week-dot.today {
+  border-color: #FF6B6B;
+}
+
+.record-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.record-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 2rpx solid #F0E6E0;
+}
+
+.record-date {
+  font-size: 32rpx;
+  color: #1A1A1A;
+  display: block;
+  font-weight: 500;
+}
+
+.record-segments {
+  font-size: 28rpx;
+  color: #999;
+  margin-top: 8rpx;
+  display: block;
+}
+
+.record-minutes {
+  font-size: 36rpx;
+  color: #FF6B6B;
+  font-weight: 700;
+}
+
+.month-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.month-item {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.month-label {
+  font-size: 28rpx;
+  color: #666;
+  width: 100rpx;
+  flex-shrink: 0;
+}
+
+.month-bar-wrapper {
+  flex: 1;
+  height: 28rpx;
+  background: #F0E6E0;
+  border-radius: 14rpx;
+  overflow: hidden;
+}
+
+.month-bar {
+  height: 100%;
+  background: #FF6B6B;
+  border-radius: 14rpx;
+}
+
+.month-count {
+  font-size: 28rpx;
+  color: #999;
+  width: 80rpx;
+  text-align: right;
+  flex-shrink: 0;
+}

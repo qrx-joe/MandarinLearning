@@ -1,0 +1,87 @@
+<view class="container">
+  <!-- 顶部条形进度 -->
+  <view class="progress-header">
+    <view class="progress-top-row">
+      <text class="segment-label">{{currentSegment.title}}</text>
+      <text class="time-display">{{currentMinute}}:{{currentSecond}} / 10:00</text>
+    </view>
+    <view class="progress-bar-bg">
+      <view class="progress-bar-fill" style="width: {{progressPercent}}%"></view>
+    </view>
+    <text class="segment-desc">第 {{currentItemIndex + 1}} / {{currentSegment.items.length}} 条</text>
+  </view>
+
+  <!-- 学习内容卡片 -->
+  <view class="content-card card">
+    <view class="content-header">
+      <text class="segment-badge">{{segmentNames[currentSegmentIndex]}}</text>
+      <view class="speed-control">
+        <text class="speed-label">语速</text>
+        <view class="speed-options">
+          <view class="speed-btn {{playbackRate === 0.8 ? 'active' : ''}}" bindtap="setSpeed" data-rate="0.8">慢</view>
+          <view class="speed-btn {{playbackRate === 1.0 ? 'active' : ''}}" bindtap="setSpeed" data-rate="1.0">常</view>
+          <view class="speed-btn {{playbackRate === 1.2 ? 'active' : ''}}" bindtap="setSpeed" data-rate="1.2">快</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="sentence-area">
+      <text class="sentence-text">{{currentItem.text}}</text>
+      <text class="sentence-pinyin" wx:if="{{currentItem.pinyin}}">{{currentItem.pinyin}}</text>
+      <view class="highlight-box" wx:if="{{currentItem.note}}">
+        <text class="highlight-label">发音要点：</text>
+        <text class="highlight-text">{{currentItem.note}}</text>
+      </view>
+    </view>
+
+    <!-- 音频控制 -->
+    <view class="audio-area">
+      <button class="btn-play" bindtap="togglePlay">
+        <text class="btn-play-icon">{{isPlaying ? '⏸' : '▶'}}</text>
+        <text class="btn-play-text">{{isPlaying ? '暂停' : '听示范'}}</text>
+      </button>
+      
+      <view class="record-row">
+        <button class="btn-record" bindtap="startRecord" wx:if="{{!isRecording}}">
+          <text class="btn-record-icon">🎙</text>
+          <text>按住跟读</text>
+        </button>
+        <button class="btn-recording" bindtap="stopRecord" wx:if="{{isRecording}}">
+          <text class="btn-record-icon">⏹</text>
+          <text>录音中 {{recordDuration}}秒</text>
+        </button>
+        
+        <button class="btn-listen" bindtap="playRecord" wx:if="{{recordPath && !isRecording}}">
+          <text class="btn-listen-icon">🔊</text>
+          <text>听自己的</text>
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分段导航（大按钮式） -->
+  <view class="segment-nav">
+    <view 
+      class="nav-btn {{currentSegmentIndex === 0 ? 'active' : ''}}" 
+      bindtap="jumpToSegment" 
+      data-index="0"
+    >热身</view>
+    <view 
+      class="nav-btn {{currentSegmentIndex === 1 ? 'active' : ''}}" 
+      bindtap="jumpToSegment" 
+      data-index="1"
+    >核心</view>
+    <view 
+      class="nav-btn {{currentSegmentIndex === 2 ? 'active' : ''}}" 
+      bindtap="jumpToSegment" 
+      data-index="2"
+    >挑战</view>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="bottom-actions">
+    <button class="btn-prev" bindtap="prevItem" disabled="{{currentSegmentIndex === 0 && currentItemIndex === 0}}">上一条</button>
+    <button class="btn-next" bindtap="nextItem" wx:if="{{!(currentSegmentIndex === 2 && currentItemIndex === currentSegment.items.length - 1)}}">下一条</button>
+    <button class="btn-finish btn-primary" bindtap="finishLearning" wx:if="{{currentSegmentIndex === 2 && currentItemIndex === currentSegment.items.length - 1}}">完成今日学习</button>
+  </view>
+</view>

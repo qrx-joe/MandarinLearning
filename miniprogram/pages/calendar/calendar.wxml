@@ -1,0 +1,82 @@
+<view class="container">
+  <!-- 月度打卡概览 -->
+  <view class="summary-card card">
+    <view class="summary-header">
+      <text class="summary-title">{{currentMonth}} 打卡日历</text>
+      <view class="summary-stats">
+        <view class="stat">
+          <text class="stat-num">{{monthStats.completed}}</text>
+          <text class="stat-label">已完成</text>
+        </view>
+        <view class="stat">
+          <text class="stat-num">{{monthStats.streak}}</text>
+          <text class="stat-label">连续打卡</text>
+        </view>
+        <view class="stat">
+          <text class="stat-num">{{monthStats.total}}</text>
+          <text class="stat-label">本月天数</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 日历网格 -->
+  <view class="calendar-card card">
+    <view class="weekdays">
+      <text wx:for="{{weekdays}}" wx:key="*this" class="weekday">{{item}}</text>
+    </view>
+    <view class="days-grid">
+      <view 
+        wx:for="{{days}}" 
+        wx:key="date"
+        class="day-cell {{item.status}} {{item.isToday ? 'today' : ''}}"
+      >
+        <text class="day-num">{{item.day}}</text>
+        <text class="day-mark" wx:if="{{item.status === 'done'}}">✓</text>
+        <text class="day-mark" wx:if="{{item.status === 'missed'}}">·</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 今日状态 -->
+  <view class="today-card card" wx:if="{{todayStatus}}">
+    <view class="today-info">
+      <text class="today-label">今日状态</text>
+      <text class="today-value {{todayStatus.done ? 'done' : 'pending'}}">
+        {{todayStatus.done ? '已完成' : '未打卡'}}
+      </text>
+    </view>
+    <view class="today-detail" wx:if="{{todayStatus.done}}">
+      <text>学习时长: {{todayStatus.minutes}} 分钟</text>
+      <text>完成内容: {{todayStatus.segments}} 个段落</text>
+    </view>
+    <button 
+      class="btn-primary" 
+      bindtap="goLearn" 
+      wx:if="{{!todayStatus.done}}"
+    >
+      去打卡
+    </button>
+  </view>
+
+  <!-- 打卡历史 -->
+  <view class="history-card card">
+    <view class="history-title">本月打卡记录</view>
+    <view class="history-list">
+      <view class="history-item" wx:for="{{historyList}}" wx:key="date">
+        <view class="history-left">
+          <text class="history-date">{{item.date}}</text>
+          <text class="history-weekday">{{item.weekday}}</text>
+        </view>
+        <view class="history-right">
+          <text class="history-status {{item.done ? 'done' : 'missed'}}">
+            {{item.done ? '✓ 已完成' : '未打卡'}}
+          </text>
+          <text class="history-minutes" wx:if="{{item.done}}">
+            {{item.minutes}} 分钟
+          </text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

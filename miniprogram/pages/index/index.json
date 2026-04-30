@@ -1,0 +1,7 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "暖声·向暖而行",
+  "navigationBarBackgroundColor": "#FF6B6B",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true
+}
