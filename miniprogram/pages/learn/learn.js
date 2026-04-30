@@ -301,7 +301,9 @@ Page({
 
     this.audioContext = wx.createInnerAudioContext()
     this.audioContext.obeyMuteSwitch = false
+    this.audioContext.volume = 1.0
 
+    // 先设置事件回调，再设置 src，最后 play
     this.audioContext.onCanplay(() => {
       console.log('Audio canplay')
     })
@@ -325,9 +327,12 @@ Page({
       this.setData({ isPlaying: false })
     })
 
-    // Set src and play
     this.audioContext.src = filePath
-    this.audioContext.play()
+    setTimeout(() => {
+      if (this.audioContext) {
+        this.audioContext.play()
+      }
+    }, 100)
   },
 
   showReadAloudFallback(text) {
