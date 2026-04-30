@@ -1,0 +1,7 @@
+{
+  "permissions": {"openapi": []},
+  "environment": {
+    "TENCENT_SECRET_ID": "YOUR_SECRET_ID",
+    "TENCENT_SECRET_KEY": "YOUR_SECRET_KEY"
+  }
+}

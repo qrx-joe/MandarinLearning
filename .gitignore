@@ -1,0 +1,42 @@
+# 微信小程序
+miniprogram_npm/
+node_modules/
+package-lock.json
+
+# 云函数配置（包含敏感信息）
+miniprogram/cloudfunctions/*/config.json
+miniprogram/cloudfunctions/*/package-lock.json
+
+# 编译产物
+*.pb.js
+*.pkg.js
+apploader.js
+app-config.js
+app-meta.js
+
+# 微信开发者工具
+.devtools/
+.wechatide/
+
+# 日志和缓存
+miniprogram_log/
+logs/
+
+# 本地配置（包含敏感信息）
+project.private.config.json
+.env
+.env.*
+
+# 备份文件
+*.backup
+*.bak
+
+# 操作系统
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
