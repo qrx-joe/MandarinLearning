@@ -248,6 +248,7 @@ Page({
     this.audioContext.playbackRate = rate
     this.audioContext.play()
     this.setData({ isPlaying: true })
+    wx.showToast({ title: '正在播放示范音', icon: 'none', duration: 1500 })
   },
 
   // Youdao TTS — download to local first, then play (most reliable on Android/iOS)
@@ -309,6 +310,7 @@ Page({
       console.log('Audio playing')
       wx.hideLoading()
       this.setData({ isPlaying: true })
+      wx.showToast({ title: '正在播放示范音', icon: 'none', duration: 1500 })
     })
 
     this.audioContext.onError((err) => {
