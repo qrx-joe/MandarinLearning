@@ -232,7 +232,11 @@ Page({
       if (currentItem.audioUrl) {
         console.log('Playing local audio:', currentItem.audioUrl)
         this.playAudio(currentItem.audioUrl, playbackRate)
+      } else if (app.globalData.cloudReady) {
+        console.log('Using cloud TTS')
+        this.generateTTS(text)
       } else {
+        // 云开发未开启，使用背景音频方案
         this.playWechatVoice(text)
       }
     }
@@ -509,6 +513,34 @@ Page({
 
     this.audioContext.src = filePath
     this.audioContext.play()
+  },
+
+  async generateTTS(text) {
+    if (!text) return
+
+    const speed = this.data.playbackRate || 1.0
+
+    try {
+      wx.showLoading({ title: '生成音频...' })
+
+      const res = await wx.cloud.callFunction({
+        name: 'generateTTS',
+        data: { text, speed }
+      })
+
+      wx.hideLoading()
+
+      if (res.result && res.result.success) {
+        this.playAudio(res.result.fileID, speed)
+      } else {
+        wx.showToast({ title: '音频生成失败，请跟读', icon: 'none' })
+        this.showReadAloudFallback(text)
+      }
+    } catch (e) {
+      wx.hideLoading()
+      console.error('TTS error:', e)
+      this.showReadAloudFallback(text)
+    }
   },
 
   setSpeed(e) {
