@@ -233,8 +233,7 @@ Page({
         console.log('Playing local audio:', currentItem.audioUrl)
         this.playAudio(currentItem.audioUrl, playbackRate)
       } else {
-        console.log('Using Youdao TTS')
-        this.playYoudaoTTS(text)
+        this.playWechatVoice(text)
       }
     }
   },
@@ -262,7 +261,6 @@ Page({
     const url = `https://dict.youdao.com/dictvoice?audio=${encoded}&type=0`
 
     console.log('TTS URL:', url)
-    console.log('Text length:', text.length, 'chars')
 
     wx.downloadFile({
       url: url,
@@ -270,6 +268,14 @@ Page({
       success: (res) => {
         console.log('Download result:', res.errMsg, res.tempFilePath)
         if (res.tempFilePath) {
+          // 检查文件类型
+          const isJson = res.tempFilePath.endsWith('.json')
+          if (isJson) {
+            console.error('API returned error JSON instead of audio')
+            wx.hideLoading()
+            this.showReadAloudFallback(text)
+            return
+          }
           this.playLocalFile(res.tempFilePath, text)
         } else {
           console.error('Download failed: no tempFilePath', res)
@@ -335,7 +341,7 @@ Page({
     this.audioContext.play()
   },
 
-  // Youdao TTS fallback
+  // Youdao TTS fallback - 显示文字让用户跟读
   showReadAloudFallback(text) {
     this.setData({ isPlaying: false })
     wx.showToast({
@@ -345,34 +351,164 @@ Page({
     })
   },
 
-  async generateTTS(text) {
-    if (!text) return
-    
-    const speed = this.data.playbackRate
-    
-    try {
-      wx.showLoading({ title: '生成音频...' })
-      
-      const res = await wx.cloud.callFunction({
-        name: 'generateTTS',
-        data: { text, speed }
-      })
-      
-      wx.hideLoading()
-      
-      if (res.result && res.result.success) {
-        this.playAudio(res.result.fileID, speed)
-      } else if (res.result && res.result.fallback) {
-        this.playYoudaoTTS(text)
-      } else {
-        wx.showToast({ title: res.result?.error || '音频生成失败', icon: 'none' })
-        this.playYoudaoTTS(text)
-      }
-    } catch (e) {
-      wx.hideLoading()
-      console.error('TTS error:', e)
-      this.playYoudaoTTS(text)
+  // 使用微信原生接口尝试播放
+  playWechatVoice(text) {
+    if (!text) {
+      wx.showToast({ title: '没有可朗读的内容', icon: 'none' })
+      return
     }
+
+    console.log('playWechatVoice starting for:', text)
+    wx.showLoading({ title: '加载音频...' })
+
+    const encoded = encodeURIComponent(text)
+    const url = `https://dict.youdao.com/dictvoice?audio=${encoded}&type=0`
+
+    // 尝试1: 使用 backgroundAudioManager（可能解码方式不同）
+    this.tryBackgroundAudio(url, text)
+
+    // 尝试2: 延迟300ms，如果 backgroundAudioManager 成功则不执行后续
+    setTimeout(() => {
+      if (!this.data.isPlaying) {
+        // 尝试2: 下载后用 stream 方式读取文件内容，然后写入新文件
+        this.downloadAndConvertAudio(url, text)
+      }
+    }, 300)
+  },
+
+  tryBackgroundAudio(url, text) {
+    const bgAudio = wx.getBackgroundAudioManager()
+    bgAudio.obeyMuteSwitch = false
+    bgAudio.volume = 1.0
+    bgAudio.playbackRate = this.data.playbackRate || 1.0
+
+    const timeoutId = setTimeout(() => {
+      console.log('BackgroundAudio timeout')
+      try { bgAudio.stop() } catch(e) {}
+    }, 8000)
+
+    bgAudio.onPlay(() => {
+      console.log('BackgroundAudio playing')
+      clearTimeout(timeoutId)
+      this.setData({ isPlaying: true })
+      wx.hideLoading()
+      wx.showToast({ title: '正在播放示范音', icon: 'none', duration: 1500 })
+    })
+
+    bgAudio.onError((err) => {
+      console.log('BackgroundAudio error:', err && err.errMsg)
+      clearTimeout(timeoutId)
+      try { bgAudio.stop() } catch(e) {}
+    })
+
+    bgAudio.onEnded(() => {
+      this.setData({ isPlaying: false })
+    })
+
+    bgAudio.src = url
+    bgAudio.title = '示范音'
+  },
+
+  downloadAndConvertAudio(url, text) {
+    wx.downloadFile({
+      url: url,
+      timeout: 10000,
+      success: (res) => {
+        console.log('Download result:', res.errMsg, res.tempFilePath)
+        if (!res.tempFilePath) {
+          wx.hideLoading()
+          this.showReadAloudFallback(text)
+          return
+        }
+
+        // 检查文件类型
+        if (res.tempFilePath.endsWith('.json')) {
+          console.error('API returned error JSON')
+          wx.hideLoading()
+          this.showReadAloudFallback(text)
+          return
+        }
+
+        // 读取文件内容并写入新文件（强制扩展名为.mp3）
+        const fs = wx.getFileSystemManager()
+        const newPath = `${wx.env.USER_DATA_PATH}/tts_audio.mp3`
+
+        fs.readFile({
+          filePath: res.tempFilePath,
+          encoding: 'binary',
+          success: (readRes) => {
+            fs.writeFile({
+              filePath: newPath,
+              data: readRes.data,
+              encoding: 'binary',
+              success: () => {
+                console.log('Audio saved to:', newPath)
+                this.playConvertedAudio(newPath, text)
+              },
+              fail: (err) => {
+                console.error('WriteFile fail:', err)
+                wx.hideLoading()
+                this.showReadAloudFallback(text)
+              }
+            })
+          },
+          fail: (err) => {
+            console.error('ReadFile fail:', err)
+            wx.hideLoading()
+            this.showReadAloudFallback(text)
+          }
+        })
+      },
+      fail: (err) => {
+        console.error('DownloadFile fail:', err)
+        wx.hideLoading()
+        this.showReadAloudFallback(text)
+      },
+      complete: () => {
+        wx.hideLoading()
+      }
+    })
+  },
+
+  playConvertedAudio(filePath, text) {
+    if (this.audioContext) {
+      try { this.audioContext.stop() } catch(e) {}
+      try { this.audioContext.destroy() } catch(e) {}
+    }
+    this.audioContext = wx.createInnerAudioContext()
+    this.audioContext.obeyMuteSwitch = false
+    this.audioContext.volume = 1.0
+    this.audioContext.playbackRate = this.data.playbackRate || 1.0
+
+    const timeoutId = setTimeout(() => {
+      console.error('Audio play timeout')
+      wx.hideLoading()
+      this.setData({ isPlaying: false })
+      this.showReadAloudFallback(text)
+    }, 10000)
+
+    this.audioContext.onPlay(() => {
+      console.log('Converted audio playing')
+      clearTimeout(timeoutId)
+      wx.hideLoading()
+      this.setData({ isPlaying: true })
+      wx.showToast({ title: '正在播放示范音', icon: 'none', duration: 1500 })
+    })
+
+    this.audioContext.onError((err) => {
+      console.error('Converted audio error:', err)
+      clearTimeout(timeoutId)
+      wx.hideLoading()
+      this.setData({ isPlaying: false })
+      this.showReadAloudFallback(text)
+    })
+
+    this.audioContext.onEnded(() => {
+      this.setData({ isPlaying: false })
+    })
+
+    this.audioContext.src = filePath
+    this.audioContext.play()
   },
 
   setSpeed(e) {
