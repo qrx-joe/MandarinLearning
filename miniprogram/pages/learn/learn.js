@@ -221,7 +221,7 @@ Page({
     const { isPlaying, currentItem, playbackRate } = this.data
     const text = currentItem.text || ''
 
-    console.log('togglePlay called, cloudReady:', app.globalData.cloudReady, 'text:', text)
+    console.log('togglePlay called, text:', text)
 
     if (isPlaying) {
       if (this.audioContext) {
@@ -233,8 +233,8 @@ Page({
         console.log('Playing local audio:', currentItem.audioUrl)
         this.playAudio(currentItem.audioUrl, playbackRate)
       } else {
-        console.log('Using Wechat TTS')
-        this.playWechatTTS(text)
+        console.log('Using Youdao TTS')
+        this.playYoudaoTTS(text)
       }
     }
   },
@@ -270,24 +270,7 @@ Page({
       success: (res) => {
         console.log('Download result:', res.errMsg, res.tempFilePath)
         if (res.tempFilePath) {
-          // 获取文件大小确认下载成功
-          wx.getFileInfo({
-            filePath: res.tempFilePath,
-            success: (info) => {
-              console.log('File size:', info.size, 'bytes')
-              if (info.size < 100) {
-                console.error('Audio file too small, likely empty')
-                wx.hideLoading()
-                this.showReadAloudFallback(text)
-              } else {
-                this.playLocalFile(res.tempFilePath, text)
-              }
-            },
-            fail: () => {
-              // getFileInfo 失败也尝试播放
-              this.playLocalFile(res.tempFilePath, text)
-            }
-          })
+          this.playLocalFile(res.tempFilePath, text)
         } else {
           console.error('Download failed: no tempFilePath', res)
           wx.hideLoading()
@@ -305,26 +288,31 @@ Page({
     })
   },
 
-  // Play a downloaded local file with a fresh audio context
+  // Play a downloaded local file
   playLocalFile(filePath, fallbackText) {
-    // Clean up old context
     if (this.audioContext) {
       try { this.audioContext.stop() } catch(e) {}
       try { this.audioContext.destroy() } catch(e) {}
-      this.audioContext = null
     }
-
     this.audioContext = wx.createInnerAudioContext()
     this.audioContext.obeyMuteSwitch = false
     this.audioContext.volume = 1.0
+    this.audioContext.playbackRate = this.data.playbackRate || 1.0
 
-    // 先设置事件回调，再设置 src，最后 play
+    const timeoutId = setTimeout(() => {
+      console.error('Audio play timeout')
+      wx.hideLoading()
+      this.setData({ isPlaying: false })
+      this.showReadAloudFallback(fallbackText)
+    }, 10000)
+
     this.audioContext.onCanplay(() => {
       console.log('Audio canplay')
     })
 
     this.audioContext.onPlay(() => {
       console.log('Audio playing')
+      clearTimeout(timeoutId)
       wx.hideLoading()
       this.setData({ isPlaying: true })
       wx.showToast({ title: '正在播放示范音', icon: 'none', duration: 1500 })
@@ -332,6 +320,7 @@ Page({
 
     this.audioContext.onError((err) => {
       console.error('Audio play error:', err)
+      clearTimeout(timeoutId)
       wx.hideLoading()
       this.setData({ isPlaying: false })
       this.showReadAloudFallback(fallbackText)
@@ -343,11 +332,7 @@ Page({
     })
 
     this.audioContext.src = filePath
-    setTimeout(() => {
-      if (this.audioContext) {
-        this.audioContext.play()
-      }
-    }, 100)
+    this.audioContext.play()
   },
 
   // Youdao TTS fallback
@@ -358,52 +343,6 @@ Page({
       icon: 'none',
       duration: 4000
     })
-  },
-
-  // 使用微信内置「朗读」能力（通过 backgroundAudioManager）
-  playWechatTTS(text) {
-    if (!text) {
-      wx.showToast({ title: '没有可朗读的内容', icon: 'none' })
-      return
-    }
-
-    console.log('Wechat TTS starting for:', text)
-    wx.showLoading({ title: '加载音频...' })
-
-    // 使用有道上古api，免费且稳定
-    const encoded = encodeURIComponent(text)
-    const url = `https://tts.baidu.com/text2audio?tex=${encoded}&cuid=mandarin_app&lan=zh&ctp=1&reg=2&per=0&spd=3&pit=5&vol=9&rate=5`
-
-    console.log('TTS URL:', url)
-
-    // 使用 innerAudioContext + 设置 audioSource
-    const audio = wx.createInnerAudioContext()
-    audio.obeyMuteSwitch = false
-    audio.volume = 1.0
-    audio.src = url
-
-    audio.onPlay(() => {
-      console.log('Audio playing')
-      wx.hideLoading()
-      this.setData({ isPlaying: true })
-      wx.showToast({ title: '正在播放示范音', icon: 'none', duration: 1500 })
-    })
-
-    audio.onError((err) => {
-      console.error('Audio play error:', err)
-      wx.hideLoading()
-      audio.destroy()
-      this.setData({ isPlaying: false })
-      this.showReadAloudFallback(text)
-    })
-
-    audio.onEnded(() => {
-      console.log('Audio ended')
-      this.setData({ isPlaying: false })
-      audio.destroy()
-    })
-
-    audio.play()
   },
 
   async generateTTS(text) {
