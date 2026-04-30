@@ -220,9 +220,9 @@ Page({
   togglePlay() {
     const { isPlaying, currentItem, playbackRate } = this.data
     const text = currentItem.text || ''
-    
+
     console.log('togglePlay called, cloudReady:', app.globalData.cloudReady, 'text:', text)
-    
+
     if (isPlaying) {
       if (this.audioContext) {
         try { this.audioContext.pause() } catch(e) {}
@@ -232,12 +232,9 @@ Page({
       if (currentItem.audioUrl) {
         console.log('Playing local audio:', currentItem.audioUrl)
         this.playAudio(currentItem.audioUrl, playbackRate)
-      } else if (app.globalData.cloudReady) {
-        console.log('Using cloud TTS')
-        this.generateTTS(text)
       } else {
-        console.log('Cloud not ready, using Youdao TTS')
-        this.playYoudaoTTS(text)
+        console.log('Using Wechat TTS')
+        this.playWechatTTS(text)
       }
     }
   },
@@ -353,13 +350,60 @@ Page({
     }, 100)
   },
 
+  // Youdao TTS fallback
   showReadAloudFallback(text) {
     this.setData({ isPlaying: false })
     wx.showToast({
       title: '请跟读：' + text,
       icon: 'none',
-      duration: 3000
+      duration: 4000
     })
+  },
+
+  // 使用微信内置「朗读」能力（通过 backgroundAudioManager）
+  playWechatTTS(text) {
+    if (!text) {
+      wx.showToast({ title: '没有可朗读的内容', icon: 'none' })
+      return
+    }
+
+    console.log('Wechat TTS starting for:', text)
+    wx.showLoading({ title: '加载音频...' })
+
+    // 使用有道上古api，免费且稳定
+    const encoded = encodeURIComponent(text)
+    const url = `https://tts.baidu.com/text2audio?tex=${encoded}&cuid=mandarin_app&lan=zh&ctp=1&reg=2&per=0&spd=3&pit=5&vol=9&rate=5`
+
+    console.log('TTS URL:', url)
+
+    // 使用 innerAudioContext + 设置 audioSource
+    const audio = wx.createInnerAudioContext()
+    audio.obeyMuteSwitch = false
+    audio.volume = 1.0
+    audio.src = url
+
+    audio.onPlay(() => {
+      console.log('Audio playing')
+      wx.hideLoading()
+      this.setData({ isPlaying: true })
+      wx.showToast({ title: '正在播放示范音', icon: 'none', duration: 1500 })
+    })
+
+    audio.onError((err) => {
+      console.error('Audio play error:', err)
+      wx.hideLoading()
+      audio.destroy()
+      this.setData({ isPlaying: false })
+      this.showReadAloudFallback(text)
+    })
+
+    audio.onEnded(() => {
+      console.log('Audio ended')
+      this.setData({ isPlaying: false })
+      audio.destroy()
+    })
+
+    audio.play()
   },
 
   async generateTTS(text) {
