@@ -262,9 +262,10 @@ Page({
     wx.showLoading({ title: '加载音频...' })
 
     const encoded = encodeURIComponent(text)
-    const url = `https://dict.youdao.com/dictvoice?audio=${encoded}&type=2`
+    const url = `https://dict.youdao.com/dictvoice?audio=${encoded}&type=1`
 
     console.log('TTS URL:', url)
+    console.log('Text length:', text.length, 'chars')
 
     wx.downloadFile({
       url: url,
@@ -272,7 +273,24 @@ Page({
       success: (res) => {
         console.log('Download result:', res.errMsg, res.tempFilePath)
         if (res.tempFilePath) {
-          this.playLocalFile(res.tempFilePath, text)
+          // 获取文件大小确认下载成功
+          wx.getFileInfo({
+            filePath: res.tempFilePath,
+            success: (info) => {
+              console.log('File size:', info.size, 'bytes')
+              if (info.size < 100) {
+                console.error('Audio file too small, likely empty')
+                wx.hideLoading()
+                this.showReadAloudFallback(text)
+              } else {
+                this.playLocalFile(res.tempFilePath, text)
+              }
+            },
+            fail: () => {
+              // getFileInfo 失败也尝试播放
+              this.playLocalFile(res.tempFilePath, text)
+            }
+          })
         } else {
           console.error('Download failed: no tempFilePath', res)
           wx.hideLoading()
