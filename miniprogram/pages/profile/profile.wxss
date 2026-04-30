@@ -1,0 +1,207 @@
+/* 个人中心 - 长辈友好风格 */
+
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 30rpx;
+  padding: 48rpx 36rpx;
+}
+
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-text {
+  font-size: 60rpx;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #1A1A1A;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.user-streak {
+  font-size: 30rpx;
+  color: #FF6B6B;
+}
+
+.settings-list {
+  background: white;
+  margin: 24rpx 32rpx;
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx;
+  border-bottom: 2rpx solid #F0E6E0;
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-left {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  flex: 1;
+}
+
+.setting-icon {
+  font-size: 44rpx;
+  width: 56rpx;
+  text-align: center;
+}
+
+.setting-info {
+  flex: 1;
+}
+
+.setting-title {
+  font-size: 34rpx;
+  color: #1A1A1A;
+  font-weight: 500;
+  display: block;
+}
+
+.setting-desc {
+  font-size: 28rpx;
+  color: #999;
+  margin-top: 8rpx;
+  display: block;
+}
+
+.picker-value {
+  color: #FF6B6B;
+  font-size: 30rpx;
+  font-weight: 500;
+}
+
+.speed-picker {
+  display: flex;
+  gap: 16rpx;
+}
+
+.speed-option {
+  padding: 14rpx 28rpx;
+  border-radius: 16rpx;
+  border: 3rpx solid #ddd;
+  font-size: 30rpx;
+  color: #666;
+  font-weight: 500;
+}
+
+.speed-option.active {
+  background: #FF6B6B;
+  color: white;
+  border-color: #FF6B6B;
+}
+
+.bind-section {
+  padding: 32rpx;
+  background: #FFF5F5;
+  margin: 0 32rpx 24rpx;
+  border-radius: 20rpx;
+}
+
+.bind-label {
+  font-size: 30rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.bind-code {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 24rpx;
+  border-radius: 12rpx;
+  border: 3rpx dashed #FF6B6B;
+}
+
+.code-text {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #FF6B6B;
+  letter-spacing: 8rpx;
+}
+
+.copy-btn {
+  font-size: 28rpx;
+  color: #FF6B6B;
+  padding: 10rpx 20rpx;
+}
+
+.bind-hint {
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 12rpx;
+  display: block;
+}
+
+.bind-input {
+  background: white;
+  padding: 24rpx;
+  border-radius: 12rpx;
+  font-size: 36rpx;
+  text-align: center;
+  letter-spacing: 8rpx;
+  border: 3rpx solid #ddd;
+  margin-bottom: 20rpx;
+}
+
+.btn-bind {
+  background: #FF6B6B;
+  color: white;
+  font-size: 32rpx;
+  border-radius: 12rpx;
+  border: none;
+  padding: 24rpx;
+  width: 100%;
+}
+
+.btn-bind::after {
+  border: none;
+}
+
+.arrow {
+  font-size: 36rpx;
+  color: #ccc;
+}
+
+.danger .setting-title {
+  color: #FF4444;
+}
+
+.about-section {
+  text-align: center;
+  padding: 48rpx;
+  margin-top: 40rpx;
+}
+
+.about-text {
+  font-size: 28rpx;
+  color: #bbb;
+  display: block;
+  margin-bottom: 8rpx;
+}

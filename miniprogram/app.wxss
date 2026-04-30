@@ -1,0 +1,129 @@
+/**app.wxss**/
+@import "common.wxss";
+
+/* === 长辈友好全局规范 === */
+
+page {
+  background-color: #FFF9F5;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  color: #1A1A1A;
+  font-size: 32rpx;
+}
+
+.container {
+  padding: 24rpx 32rpx;
+}
+
+/* 卡片 */
+.card {
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 36rpx 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+}
+
+/* 主按钮 */
+.btn-primary {
+  background: #FF6B6B;
+  color: #fff;
+  border-radius: 52rpx;
+  padding: 28rpx 48rpx;
+  font-size: 34rpx;
+  font-weight: 600;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100rpx;
+  width: 100%;
+  box-shadow: 0 4rpx 16rpx rgba(255,107,107,0.25);
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+.btn-primary:active {
+  opacity: 0.85;
+}
+
+/* 次要按钮 */
+.btn-secondary {
+  background: #fff;
+  color: #FF6B6B;
+  border: 3rpx solid #FF6B6B;
+  border-radius: 52rpx;
+  padding: 24rpx 48rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 96rpx;
+  width: 100%;
+}
+
+.btn-secondary::after {
+  border: none;
+}
+
+/* 文字 */
+.text-primary { color: #FF6B6B; }
+.text-secondary { color: #666; }
+.text-small { font-size: 28rpx; }
+.text-large { font-size: 48rpx; font-weight: 700; }
+
+/* 进度条 */
+.progress-bar-bg {
+  height: 24rpx;
+  background: #F0E6E0;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: #FF6B6B;
+  border-radius: 12rpx;
+  transition: width 0.3s ease;
+}
+
+/* 分割线 */
+.divider {
+  height: 2rpx;
+  background: #F0E6E0;
+  margin: 24rpx 0;
+}
+
+/* 大数字卡片（仪表盘用） */
+.big-stat-card {
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 40rpx 32rpx;
+  text-align: center;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+}
+
+.big-stat-value {
+  font-size: 56rpx;
+  font-weight: 700;
+  color: #FF6B6B;
+  display: block;
+}
+
+.big-stat-label {
+  font-size: 30rpx;
+  color: #666;
+  margin-top: 12rpx;
+  display: block;
+}
+
+/* 通用 section 标题 */
+.section-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin-bottom: 24rpx;
+  display: block;
+}

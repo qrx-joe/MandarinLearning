@@ -1,0 +1,92 @@
+.share-canvas {
+  width: 750rpx;
+  height: 1000rpx;
+  display: block;
+  margin: 0 auto;
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.15);
+}
+
+.preview-area {
+  position: relative;
+  padding: 30rpx;
+}
+
+.generating-overlay {
+  position: absolute;
+  top: 30rpx;
+  left: 30rpx;
+  right: 30rpx;
+  bottom: 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.9);
+  border-radius: 20rpx;
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 6rpx solid #f0f0f0;
+  border-top-color: #FF6B6B;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20rpx;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  padding: 0 60rpx;
+  margin-top: 40rpx;
+}
+
+.btn-save, .btn-share {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+  padding: 24rpx 0;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  border: none;
+}
+
+.btn-save::after, .btn-share::after {
+  border: none;
+}
+
+.btn-save {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
+  color: white;
+}
+
+.btn-share {
+  background: white;
+  color: #FF6B6B;
+  border: 2rpx solid #FF6B6B;
+}
+
+.btn-icon {
+  font-size: 36rpx;
+}
+
+.tip-text {
+  text-align: center;
+  margin-top: 30rpx;
+  font-size: 24rpx;
+  color: #999;
+}

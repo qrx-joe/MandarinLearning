@@ -1,0 +1,7 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "监督看板",
+  "navigationBarBackgroundColor": "#FF6B6B",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true
+}

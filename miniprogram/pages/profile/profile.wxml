@@ -1,0 +1,104 @@
+<view class="container">
+  <!-- 用户信息 -->
+  <view class="user-card card">
+    <view class="user-avatar">
+      <text class="avatar-text">👤</text>
+    </view>
+    <view class="user-info">
+      <text class="user-name">学习者</text>
+      <text class="user-streak">连续打卡 {{streakDays}} 天</text>
+    </view>
+  </view>
+
+  <!-- 设置列表 -->
+  <view class="settings-list">
+    
+    <!-- 每日提醒 -->
+    <view class="setting-item">
+      <view class="setting-left">
+        <text class="setting-icon">⏰</text>
+        <view class="setting-info">
+          <text class="setting-title">每日提醒</text>
+          <text class="setting-desc">{{reminderTime || '20:00'}} 提醒学习</text>
+        </view>
+      </view>
+      <switch checked="{{reminderEnabled}}" bindchange="toggleReminder" color="#FF6B6B" />
+    </view>
+
+    <!-- 提醒时间 -->
+    <view class="setting-item" wx:if="{{reminderEnabled}}">
+      <view class="setting-left">
+        <text class="setting-icon">🕐</text>
+        <view class="setting-info">
+          <text class="setting-title">提醒时间</text>
+        </view>
+      </view>
+      <picker mode="time" value="{{reminderTime}}" bindchange="setReminderTime">
+        <view class="picker-value">{{reminderTime}}</view>
+      </picker>
+    </view>
+
+    <!-- 默认语速 -->
+    <view class="setting-item">
+      <view class="setting-left">
+        <text class="setting-icon">🗣</text>
+        <view class="setting-info">
+          <text class="setting-title">默认语速</text>
+          <text class="setting-desc">跟读音频默认速度</text>
+        </view>
+      </view>
+      <view class="speed-picker">
+        <view class="speed-option {{defaultSpeed === 0.8 ? 'active' : ''}}" bindtap="setDefaultSpeed" data-speed="0.8">慢</view>
+        <view class="speed-option {{defaultSpeed === 1.0 ? 'active' : ''}}" bindtap="setDefaultSpeed" data-speed="1.0">常</view>
+        <view class="speed-option {{defaultSpeed === 1.2 ? 'active' : ''}}" bindtap="setDefaultSpeed" data-speed="1.2">快</view>
+      </view>
+    </view>
+
+    <!-- 家庭绑定 -->
+    <view class="setting-item">
+      <view class="setting-left">
+        <text class="setting-icon">👨‍👩‍👧</text>
+        <view class="setting-info">
+          <text class="setting-title">家庭监督</text>
+          <text class="setting-desc">让家人看到你的学习进度</text>
+        </view>
+      </view>
+      <switch checked="{{familyBound}}" bindchange="toggleFamily" color="#FF6B6B" />
+    </view>
+
+    <!-- 绑定码 -->
+    <view class="bind-section" wx:if="{{familyBound}}">
+      <view wx:if="{{bindCode}}">
+        <text class="bind-label">你的绑定码</text>
+        <view class="bind-code">
+          <text class="code-text">{{bindCode}}</text>
+          <text class="copy-btn" bindtap="copyCode">复制</text>
+        </view>
+        <text class="bind-hint">让家人在监督看板输入此码</text>
+      </view>
+      <view wx:else>
+        <text class="bind-label">输入家人绑定码</text>
+        <input class="bind-input" placeholder="请输入8位绑定码" maxlength="8" bindinput="onBindCodeInput" />
+        <button class="btn-bind" bindtap="submitBindCode">绑定</button>
+      </view>
+    </view>
+
+    <!-- 数据管理 -->
+    <view class="setting-item danger" bindtap="showClearConfirm">
+      <view class="setting-left">
+        <text class="setting-icon">🗑</text>
+        <view class="setting-info">
+          <text class="setting-title">清除学习记录</text>
+          <text class="setting-desc">重置所有打卡数据（不可恢复）</text>
+        </view>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 关于 -->
+  <view class="about-section">
+    <text class="about-text">暖声·向暖而行 v1.0</text>
+    <text class="about-text">为家人设计的学习工具</text>
+  </view>
+</view>

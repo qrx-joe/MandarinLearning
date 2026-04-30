@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="preview-area">
+    <canvas canvas-id="shareCanvas" class="share-canvas" style="width: 750rpx; height: 1000rpx;"></canvas>
+    <view class="generating-overlay" wx:if="{{isGenerating}}">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">生成中...</text>
+    </view>
+  </view>
+
+  <view class="action-buttons">
+    <button class="btn-save" bindtap="saveImage" wx:if="{{!isGenerating}}">
+      <text class="btn-icon">💾</text>
+      <text class="btn-text">保存到相册</text>
+    </button>
+    <button class="btn-share" open-type="share" wx:if="{{!isGenerating}}">
+      <text class="btn-icon">📤</text>
+      <text class="btn-text">分享给好友</text>
+    </button>
+  </view>
+
+  <view class="tip-text">
+    <text>保存图片后可以分享到朋友圈</text>
+  </view>
+</view>
