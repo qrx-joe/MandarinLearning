@@ -262,7 +262,7 @@ Page({
     wx.showLoading({ title: '加载音频...' })
 
     const encoded = encodeURIComponent(text)
-    const url = `https://dict.youdao.com/dictvoice?audio=${encoded}&type=1`
+    const url = `https://dict.youdao.com/dictvoice?audio=${encoded}&type=0`
 
     console.log('TTS URL:', url)
     console.log('Text length:', text.length, 'chars')
