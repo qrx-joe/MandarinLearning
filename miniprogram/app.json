@@ -7,6 +7,15 @@
     "pages/dashboard/dashboard",
     "pages/profile/profile"
   ],
+  "subPackages": [
+    { "root": "audio-pkg-a", "name": "audio-a", "pages": ["_dummy"] },
+    { "root": "audio-pkg-b", "name": "audio-b", "pages": ["_dummy"] },
+    { "root": "audio-pkg-c", "name": "audio-c", "pages": ["_dummy"] },
+    { "root": "audio-pkg-d", "name": "audio-d", "pages": ["_dummy"] }
+  ],
+  "preloadRule": {
+    "pages/index/index": { "network": "all", "packages": ["audio-a"] }
+  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#FF6B6B",

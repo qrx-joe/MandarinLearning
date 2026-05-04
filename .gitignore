@@ -40,3 +40,14 @@ Thumbs.db
 .vscode/
 *.swp
 *.swo
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# tts-generator 中间产物（脚本可重生成）
+scripts/tts-generator/audio/
+scripts/tts-generator/samples/
+scripts/tts-generator/items.json

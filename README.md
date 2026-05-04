@@ -32,9 +32,8 @@ mandarin_app_v2_ui_elder/
 │   │   ├── getFamilyDashboard/   # 家人看板
 │   │   ├── sendFamilyReminder/   # 发送家人提醒
 │   │   ├── userProfile/          # 用户资料
-│   │   ├── updateProfile/        # 更新资料
 │   │   ├── clearAllProgress/     # 清除进度
-│   │   └── generateTTS/          # TTS语音合成
+│   │   └── updateProfile/        # 更新资料
 │   ├── data/                     # 学习内容数据
 │   ├── utils/                    # 工具函数
 │   ├── images/                   # 静态资源
@@ -60,7 +59,6 @@ mandarin_app_v2_ui_elder/
 | `userProfile` | 获取用户资料 |
 | `updateProfile` | 更新用户资料 |
 | `clearAllProgress` | 清除所有学习进度 |
-| `generateTTS` | 文字转语音合成 |
 
 ## 本地开发
 
