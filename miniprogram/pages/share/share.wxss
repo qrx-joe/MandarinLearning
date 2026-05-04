@@ -47,22 +47,25 @@
 
 .action-buttons {
   display: flex;
-  flex-direction: column;
-  gap: 20rpx;
-  padding: 0 60rpx;
-  margin-top: 40rpx;
+  flex-direction: row;
+  justify-content: center;
+  gap: 24rpx;
+  padding: 0 40rpx;
+  margin-top: 32rpx;
 }
 
 .btn-save, .btn-share {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16rpx;
-  padding: 24rpx 0;
-  border-radius: 40rpx;
-  font-size: 32rpx;
+  gap: 12rpx;
+  padding: 20rpx 0;
+  border-radius: 32rpx;
+  font-size: 28rpx;
   font-weight: 600;
   border: none;
+  flex: 1;
+  max-width: 260rpx;
 }
 
 .btn-save::after, .btn-share::after {
@@ -72,6 +75,7 @@
 .btn-save {
   background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
   color: white;
+  box-shadow: 0 4rpx 16rpx rgba(255,107,107,0.3);
 }
 
 .btn-share {
@@ -81,12 +85,12 @@
 }
 
 .btn-icon {
-  font-size: 36rpx;
+  font-size: 32rpx;
 }
 
 .tip-text {
   text-align: center;
-  margin-top: 30rpx;
+  margin-top: 24rpx;
   font-size: 24rpx;
   color: #999;
 }

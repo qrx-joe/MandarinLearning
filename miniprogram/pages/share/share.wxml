@@ -1,6 +1,6 @@
 <view class="container">
   <view class="preview-area">
-    <canvas canvas-id="shareCanvas" class="share-canvas" style="width: 750rpx; height: 1000rpx;"></canvas>
+    <canvas canvas-id="shareCanvas" class="share-canvas" style="width: 375px; height: 500px;"></canvas>
     <view class="generating-overlay" wx:if="{{isGenerating}}">
       <view class="loading-spinner"></view>
       <text class="loading-text">生成中...</text>
