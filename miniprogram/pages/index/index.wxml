@@ -72,10 +72,6 @@
         <view class="quick-icon-bg">📅</view>
         <text class="quick-label">打卡日历</text>
       </view>
-      <view class="quick-item" bindtap="goDashboard" wx:if="{{isSupervisor}}">
-        <view class="quick-icon-bg">👨‍👩‍👧</view>
-        <text class="quick-label">家庭看板</text>
-      </view>
       <view class="quick-item" bindtap="goSettings">
         <view class="quick-icon-bg">⚙️</view>
         <text class="quick-label">设置</text>

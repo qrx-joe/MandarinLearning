@@ -11,7 +11,6 @@ Page({
     dailyContent: { title: '' },
     currentWeek: 1,
     weeklyTheme: { name: '', desc: '' },
-    isSupervisor: false,
     isLoading: true,
     useLocalMode: true
   },
@@ -61,7 +60,6 @@ Page({
       dailyContent: { title: `第 ${day} 天 · ${theme.name}` },
       currentWeek: week,
       weeklyTheme: theme,
-      isSupervisor: false,
       isLoading: false,
       useLocalMode: true
     })

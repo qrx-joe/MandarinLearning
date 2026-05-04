@@ -2,7 +2,6 @@ const app = getApp()
 
 Page({
   data: {
-    boundUser: null,
     missedDays: 0,
     weekDays: [],
     weeklyCompleted: 0,
@@ -39,16 +38,7 @@ Page({
       completed: true
     }))
 
-    // 读取本地绑定的家人信息
-    const boundTo = wx.getStorageSync('family_bound_to')
-    const boundUser = boundTo ? {
-      nickName: boundTo.name || '家人',
-      streakDays,
-      totalDays
-    } : null
-
     this.setData({
-      boundUser,
       missedDays,
       weekDays: weekData.days,
       weeklyCompleted: weekData.completed,
@@ -188,11 +178,18 @@ Page({
     return dateStr.slice(5).replace('-', '月') + '日'
   },
 
-  sendReminder() {
-    wx.showModal({
-      title: '提醒家人',
-      content: '已发送学习提醒（模拟）',
-      showCancel: false
+  goLearn() {
+    let startStr = wx.getStorageSync('user_start_date')
+    if (!startStr) {
+      startStr = new Date().toISOString().slice(0, 10)
+      wx.setStorageSync('user_start_date', startStr)
+    }
+    const start = new Date(startStr)
+    const today = new Date()
+    const diff = Math.floor((today - start) / (1000 * 60 * 60 * 24))
+    const day = (diff % 50) + 1
+    wx.navigateTo({
+      url: `/pages/learn/learn?day=${day}`
     })
   },
 

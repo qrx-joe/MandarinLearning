@@ -1,22 +1,16 @@
 <view class="container">
-  <!-- 已绑定家人 -->
-  <view class="family-header" wx:if="{{boundUser}}">
+  <!-- 个人头部 -->
+  <view class="family-header">
     <view class="family-avatar">
-      <text class="avatar-icon">👩</text>
+      <text class="avatar-icon">📊</text>
     </view>
     <view class="family-info">
-      <text class="family-name">{{boundUser.nickName || '妈妈'}}</text>
+      <text class="family-name">我的学习统计</text>
       <view class="family-stats">
-        <text class="stat-badge">连续 {{boundUser.streakDays || 0}} 天</text>
-        <text class="stat-badge">总 {{boundUser.totalDays || 0}} 天</text>
+        <text class="stat-badge">连续 {{streakDays || 0}} 天</text>
+        <text class="stat-badge">总 {{totalDays || 0}} 天</text>
       </view>
     </view>
-  </view>
-
-  <view class="empty-state" wx:else>
-    <text class="empty-icon">👨‍👩‍👧</text>
-    <text class="empty-title">还没有绑定家人</text>
-    <text class="empty-desc">请在个人页打开"家庭监督"，获取绑定码</text>
   </view>
 
   <!-- 异常提醒 -->
@@ -24,13 +18,13 @@
     <text class="alert-icon">⚠️</text>
     <view class="alert-content">
       <text class="alert-title">注意：已连续 {{missedDays}} 天未打卡</text>
-      <text class="alert-desc">建议提醒家人坚持学习</text>
+      <text class="alert-desc">坚持学习，每天都有进步</text>
     </view>
-    <button class="btn-remind" bindtap="sendReminder">提醒一下</button>
+    <button class="btn-remind" bindtap="goLearn">去打卡</button>
   </view>
 
   <!-- 本周打卡 -->
-  <view class="section-card card" wx:if="{{boundUser}}">
+  <view class="section-card card">
     <view class="section-header">
       <text class="section-title">本周打卡</text>
       <text class="section-sub">{{weeklyCompleted}}/7 天</text>
