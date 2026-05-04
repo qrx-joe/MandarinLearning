@@ -119,7 +119,7 @@ Page({
       this.setData({ isPlaying: false })
     })
     this.audioContext.onError((err) => {
-      console.error('TTS audio error:', err)
+      console.error('Audio error:', err)
       this.setData({ isPlaying: false })
     })
   },
@@ -230,10 +230,23 @@ Page({
   },
 
   playAudio(url, rate) {
+    if (!url) {
+      wx.showToast({ title: '暂无音频', icon: 'none' })
+      return
+    }
     if (!this.audioContext) this.initAudio()
+    try { this.audioContext.stop() } catch (e) {}
+
     this.audioContext.src = url
     this.audioContext.playbackRate = rate
-    this.audioContext.play()
+
+    const doPlay = () => {
+      this.audioContext.play()
+      this.audioContext.offCanplay(doPlay)
+    }
+    this.audioContext.offCanplay(doPlay)
+    this.audioContext.onCanplay(doPlay)
+
     this.setData({ isPlaying: true })
     wx.showToast({ title: '正在播放示范音', icon: 'none', duration: 1500 })
   },
@@ -431,20 +444,18 @@ Page({
 
   async saveProgress(day, minutes) {
     const today = new Date().toISOString().slice(0, 10)
-    
-    if (!app.globalData.cloudReady) {
-      const key = `mandarin-progress-${today}`
-      wx.setStorageSync(key, { day, minutes, completed: true })
-      return
-    }
-    
+    const key = `mandarin-progress-${today}`
+    wx.setStorageSync(key, { day, minutes, completed: true })
+
+    if (!app.globalData.cloudReady) return
+
     try {
       await wx.cloud.callFunction({
         name: 'recordProgress',
         data: { day, minutes, completed: true }
       })
     } catch (e) {
-      console.error('Save progress failed:', e)
+      // 云环境不存在时静默降级,本地已保存
     }
   }
 })

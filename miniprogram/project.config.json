@@ -5,6 +5,22 @@
       {
         "value": "node_modules",
         "type": "folder"
+      },
+      {
+        "value": "audio-pkg-a",
+        "type": "folder"
+      },
+      {
+        "value": "audio-pkg-b",
+        "type": "folder"
+      },
+      {
+        "value": "audio-pkg-c",
+        "type": "folder"
+      },
+      {
+        "value": "audio-pkg-d",
+        "type": "folder"
       }
     ],
     "include": []
