@@ -48,6 +48,7 @@ Page({
   audioContext: null,
   recordContext: null,
   recordTimer: null,
+  downloadLocks: {},
 
   onLoad(options) {
     console.log('=== 暖声·向暖而行 v1.8 学习页加载 ===')
@@ -238,7 +239,11 @@ Page({
     if (!this.audioContext) this.initAudio()
     try { this.audioContext.stop() } catch (e) {}
 
-    this.audioContext.src = url
+    // 优先使用本地缓存
+    const cachePath = this.getAudioCachePath(url)
+    const playUrl = cachePath || url
+
+    this.audioContext.src = playUrl
     this.audioContext.playbackRate = rate
 
     const doPlay = () => {
@@ -250,6 +255,58 @@ Page({
 
     this.setData({ isPlaying: true })
     wx.showToast({ title: '正在播放示范音', icon: 'none', duration: 1500 })
+
+    // 后台下载缓存（如果还没有）
+    if (!cachePath && url.startsWith('http')) {
+      this.downloadAndCache(url)
+    }
+  },
+
+  getAudioCachePath(url) {
+    const key = 'audio_cache_' + url
+    const cachedPath = wx.getStorageSync(key)
+    if (!cachedPath) return null
+
+    try {
+      wx.getFileSystemManager().accessSync(cachedPath)
+      return cachedPath
+    } catch (e) {
+      wx.removeStorageSync(key)
+      return null
+    }
+  },
+
+  downloadAndCache(url) {
+    if (this.downloadLocks[url]) return
+    this.downloadLocks[url] = true
+
+    const fileName = url.split('/').pop()
+    wx.downloadFile({
+      url,
+      success: (res) => {
+        if (res.statusCode === 200) {
+          const fs = wx.getFileSystemManager()
+          const cachePath = `${wx.env.USER_DATA_PATH}/${fileName}`
+          fs.saveFile({
+            tempFilePath: res.tempFilePath,
+            filePath: cachePath,
+            success: () => {
+              wx.setStorageSync('audio_cache_' + url, cachePath)
+              console.log('Audio cached:', fileName)
+            },
+            fail: (err) => {
+              console.error('Save audio cache failed:', err)
+            }
+          })
+        }
+      },
+      fail: (err) => {
+        console.error('Download audio failed:', err)
+      },
+      complete: () => {
+        delete this.downloadLocks[url]
+      }
+    })
   },
 
   setSpeed(e) {
