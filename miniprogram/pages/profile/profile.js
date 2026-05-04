@@ -9,7 +9,9 @@ Page({
     familyBound: false,
     bindCode: '',
     inputBindCode: '',
-    useLocalMode: false
+    useLocalMode: false,
+    nickname: '学习者',
+    avatarUrl: ''
   },
 
   onLoad() {
@@ -26,33 +28,25 @@ Page({
         defaultSpeed: 0.8,
         familyBound: false,
         bindCode: '',
-        useLocalMode: true
+        useLocalMode: true,
+        nickname: '学习者',
+        avatarUrl: ''
       })
       return
     }
 
-    try {
-      const res = await wx.cloud.callFunction({
-        name: 'userProfile'
-      })
-      const data = res.result || {}
-      this.setData({
-        streakDays: data.streakDays || 0,
-        reminderEnabled: data.reminderEnabled !== false,
-        reminderTime: data.reminderTime || '20:00',
-        defaultSpeed: data.defaultSpeed || 0.8,
-        familyBound: !!data.bindCode || !!data.boundTo,
-        bindCode: data.bindCode || '',
-        useLocalMode: false
-      })
-    } catch (e) {
-      console.error('Profile load failed:', e)
-      // Use local defaults
-      this.setData({
-        streakDays: 3,
-        useLocalMode: true
-      })
-    }
+    // 云环境已废弃，使用本地默认值
+    this.setData({
+      streakDays: 3,
+      reminderEnabled: true,
+      reminderTime: '20:00',
+      defaultSpeed: 0.8,
+      familyBound: false,
+      bindCode: '',
+      useLocalMode: true,
+      nickname: '学习者',
+      avatarUrl: ''
+    })
   },
 
   toggleReminder(e) {
@@ -167,6 +161,63 @@ Page({
       },
       fail: (err) => {
         console.error('Subscribe failed:', err)
+      }
+    })
+  },
+
+  chooseAvatar() {
+    wx.showActionSheet({
+      itemList: ['拍照', '从相册选择'],
+      success: (res) => {
+        const sourceType = res.tapIndex === 0 ? ['camera'] : ['album']
+        wx.chooseMedia({
+          count: 1,
+          mediaType: ['image'],
+          sourceType,
+          success: async (mediaRes) => {
+            const tempFilePath = mediaRes.tempFiles[0].tempFilePath
+            const cloudPath = `avatars/${Date.now()}_${Math.random().toString(36).slice(2)}.jpg`
+
+            if (!app.globalData.cloudReady) {
+              wx.showToast({ title: '本地模式不支持上传头像', icon: 'none' })
+              return
+            }
+
+            try {
+              wx.showLoading({ title: '上传中...' })
+              const uploadRes = await wx.cloud.uploadFile({
+                cloudPath,
+                filePath: tempFilePath
+              })
+
+              this.setData({ avatarUrl: uploadRes.fileID })
+              await this.saveSetting('avatarUrl', uploadRes.fileID)
+              wx.showToast({ title: '头像已更新', icon: 'success' })
+            } catch (e) {
+              console.error('Upload avatar failed:', e)
+              wx.showToast({ title: '上传失败', icon: 'none' })
+            } finally {
+              wx.hideLoading()
+            }
+          }
+        })
+      }
+    })
+  },
+
+  editNickname() {
+    wx.showModal({
+      title: '修改昵称',
+      content: this.data.nickname === '学习者' ? '' : this.data.nickname,
+      editable: true,
+      placeholderText: '请输入昵称',
+      success: async (res) => {
+        if (res.confirm && res.content && res.content.trim()) {
+          const newName = res.content.trim().slice(0, 12)
+          this.setData({ nickname: newName })
+          await this.saveSetting('nickname', newName)
+          wx.showToast({ title: '昵称已更新', icon: 'success' })
+        }
       }
     })
   },

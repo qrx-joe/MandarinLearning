@@ -31,26 +31,9 @@ Page({
     const month = now.getMonth() + 1
     const todayStr = this.formatDate(now)
     
-    let records = []
-    let streakDays = 0
-    
-    try {
-      if (app.globalData.cloudReady) {
-        const res = await wx.cloud.callFunction({
-          name: 'getCalendar',
-          data: { year, month }
-        })
-        records = res.result?.records || []
-        streakDays = res.result?.streakDays || 0
-      } else {
-        throw new Error('Cloud not ready')
-      }
-    } catch (e) {
-      console.log('Calendar cloud failed, using local:', e)
-      // 本地模式：从 storage 读取 + 生成模拟数据
-      records = this.getLocalRecords(year, month)
-      streakDays = this.calcLocalStreak(records)
-    }
+    // 云环境已废弃，直接从本地读取
+    const records = this.getLocalRecords(year, month)
+    const streakDays = this.calcLocalStreak(records)
     
     this.renderCalendar(year, month, records, todayStr, streakDays)
     this.setData({ isLoading: false })
@@ -115,7 +98,7 @@ Page({
     
     // Empty slots before 1st
     for (let i = 0; i < firstDay; i++) {
-      days.push({ empty: true, date: '' })
+      days.push({ empty: true, date: `empty-${i}` })
     }
     
     // Calendar days

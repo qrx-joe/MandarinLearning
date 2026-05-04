@@ -20,35 +20,8 @@ Page({
     const app = getApp()
     this.setData({ isLoading: true })
     
-    // 如果云开发未初始化，直接使用本地模式，避免超时
-    if (!app.globalData.cloudReady) {
-      console.log('Cloud not ready, skipping cloud call, using local mode')
-      this.loadLocalData()
-      return
-    }
-    
-    try {
-      // 尝试从云函数获取数据
-      const res = await wx.cloud.callFunction({
-        name: 'getDailyContent',
-        data: { day: this.getTodayDay() }
-      })
-      
-      if (res.result && res.result.data) {
-        this.setData({
-          todayDay: res.result.data.day || this.getTodayDay(),
-          streakDays: res.result.streakDays || 0,
-          isLearned: res.result.isLearned || false,
-          progressPercent: res.result.progressPercent || 0,
-          isLoading: false,
-          useLocalMode: false
-        })
-      }
-    } catch (e) {
-      console.log('Cloud failed, using local mode:', e)
-      // 云开发未开通，使用本地模拟数据
-      this.loadLocalData()
-    }
+    // 云开发环境已废弃，直接使用本地模式
+    this.loadLocalData()
   },
 
   loadLocalData() {
