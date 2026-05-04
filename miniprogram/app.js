@@ -30,11 +30,6 @@ App({
         fail: (err) => {
           this.globalData.cloudReady = false
           console.error('❌ 云开发环境不可用:', err.errMsg || err.message)
-          wx.showModal({
-            title: '云开发提示',
-            content: '当前云环境未开通或环境ID错误，已自动切换为本地模式。学习数据将保存在本机。',
-            showCancel: false
-          })
         }
       })
     } else {
