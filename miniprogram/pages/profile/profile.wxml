@@ -1,11 +1,16 @@
 <view class="container">
   <!-- 用户信息 -->
   <view class="user-card card">
-    <view class="user-avatar">
-      <text class="avatar-text">👤</text>
+    <view class="user-avatar" bindtap="chooseAvatar">
+      <image wx:if="{{avatarUrl}}" class="avatar-img" src="{{avatarUrl}}" mode="aspectFill" />
+      <text wx:else class="avatar-text">👤</text>
+      <view class="avatar-badge">📷</view>
     </view>
     <view class="user-info">
-      <text class="user-name">学习者</text>
+      <view class="user-name-wrap" bindtap="editNickname">
+        <text class="user-name">{{nickname}}</text>
+        <text class="edit-icon">✏️</text>
+      </view>
       <text class="user-streak">连续打卡 {{streakDays}} 天</text>
     </view>
   </view>

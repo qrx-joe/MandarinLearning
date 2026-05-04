@@ -19,23 +19,8 @@ Page({
   },
 
   async loadProfile() {
-    // 检查云开发是否可用
-    if (!app.globalData.cloudReady) {
-      this.setData({
-        streakDays: 3,
-        reminderEnabled: true,
-        reminderTime: '20:00',
-        defaultSpeed: 0.8,
-        familyBound: false,
-        bindCode: '',
-        useLocalMode: true,
-        nickname: '学习者',
-        avatarUrl: ''
-      })
-      return
-    }
-
-    // 云环境已废弃，使用本地默认值
+    const savedNickname = wx.getStorageSync('nickname') || '学习者'
+    const savedAvatar = wx.getStorageSync('avatarUrl') || ''
     this.setData({
       streakDays: 3,
       reminderEnabled: true,
@@ -44,8 +29,8 @@ Page({
       familyBound: false,
       bindCode: '',
       useLocalMode: true,
-      nickname: '学习者',
-      avatarUrl: ''
+      nickname: savedNickname,
+      avatarUrl: savedAvatar
     })
   },
 
@@ -174,30 +159,18 @@ Page({
           count: 1,
           mediaType: ['image'],
           sourceType,
-          success: async (mediaRes) => {
+          success: (mediaRes) => {
             const tempFilePath = mediaRes.tempFiles[0].tempFilePath
-            const cloudPath = `avatars/${Date.now()}_${Math.random().toString(36).slice(2)}.jpg`
-
-            if (!app.globalData.cloudReady) {
-              wx.showToast({ title: '本地模式不支持上传头像', icon: 'none' })
-              return
-            }
+            const fs = wx.getFileSystemManager()
 
             try {
-              wx.showLoading({ title: '上传中...' })
-              const uploadRes = await wx.cloud.uploadFile({
-                cloudPath,
-                filePath: tempFilePath
-              })
-
-              this.setData({ avatarUrl: uploadRes.fileID })
-              await this.saveSetting('avatarUrl', uploadRes.fileID)
+              const savedPath = fs.saveFileSync(tempFilePath)
+              wx.setStorageSync('avatarUrl', savedPath)
+              this.setData({ avatarUrl: savedPath })
               wx.showToast({ title: '头像已更新', icon: 'success' })
             } catch (e) {
-              console.error('Upload avatar failed:', e)
-              wx.showToast({ title: '上传失败', icon: 'none' })
-            } finally {
-              wx.hideLoading()
+              console.error('Save avatar failed:', e)
+              wx.showToast({ title: '保存失败', icon: 'none' })
             }
           }
         })
@@ -211,11 +184,11 @@ Page({
       content: this.data.nickname === '学习者' ? '' : this.data.nickname,
       editable: true,
       placeholderText: '请输入昵称',
-      success: async (res) => {
+      success: (res) => {
         if (res.confirm && res.content && res.content.trim()) {
           const newName = res.content.trim().slice(0, 12)
+          wx.setStorageSync('nickname', newName)
           this.setData({ nickname: newName })
-          await this.saveSetting('nickname', newName)
           wx.showToast({ title: '昵称已更新', icon: 'success' })
         }
       }

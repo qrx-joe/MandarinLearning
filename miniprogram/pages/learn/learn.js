@@ -121,6 +121,7 @@ Page({
     this.audioContext.onError((err) => {
       console.error('Audio error:', err)
       this.setData({ isPlaying: false })
+      wx.showToast({ title: '音频加载失败，请检查网络', icon: 'none', duration: 2000 })
     })
   },
 
