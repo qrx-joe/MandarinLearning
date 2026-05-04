@@ -1,3 +1,7 @@
+.container {
+  padding: 24rpx 0;
+}
+
 .share-canvas {
   width: 750rpx;
   height: 1000rpx;
@@ -9,7 +13,7 @@
 
 .preview-area {
   position: relative;
-  padding: 30rpx;
+  padding: 30rpx 0;
 }
 
 .generating-overlay {

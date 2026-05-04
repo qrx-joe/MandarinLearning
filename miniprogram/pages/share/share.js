@@ -76,24 +76,24 @@ Page({
     ctx.fillStyle = gradient
     ctx.fillRect(0, 0, w, h)
 
-    // 装饰圆
+    // 装饰圆（放大，容纳文字）
     ctx.beginPath()
-    ctx.arc(w / 2, 90, 60, 0, Math.PI * 2)
+    ctx.arc(w / 2, 130, 85, 0, Math.PI * 2)
     ctx.fillStyle = 'rgba(255,255,255,0.15)'
     ctx.fill()
 
     // 顶部图标
     ctx.font = 'normal 40px sans-serif'
     ctx.textAlign = 'center'
-    ctx.fillText('🔥', w / 2, 100)
+    ctx.fillText('🔥', w / 2, 105)
 
     // 连续天数
     ctx.fillStyle = 'white'
     ctx.font = 'bold 60px sans-serif'
-    ctx.fillText(`${this.data.streakDays}`, w / 2, 180)
+    ctx.fillText(`${this.data.streakDays}`, w / 2, 148)
 
     ctx.font = 'normal 18px sans-serif'
-    ctx.fillText('连续打卡天数', w / 2, 210)
+    ctx.fillText('连续打卡天数', w / 2, 180)
 
     // 分隔线
     ctx.beginPath()
