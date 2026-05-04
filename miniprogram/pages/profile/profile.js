@@ -21,11 +21,15 @@ Page({
   async loadProfile() {
     const savedNickname = wx.getStorageSync('nickname') || '学习者'
     const savedAvatar = wx.getStorageSync('avatarUrl') || ''
+    const savedReminder = wx.getStorageSync('setting_reminderEnabled')
+    const savedTime = wx.getStorageSync('setting_reminderTime')
+    const savedSpeed = wx.getStorageSync('setting_defaultSpeed')
+
     this.setData({
       streakDays: 3,
-      reminderEnabled: true,
-      reminderTime: '20:00',
-      defaultSpeed: 0.8,
+      reminderEnabled: savedReminder !== '' ? savedReminder : true,
+      reminderTime: savedTime || '20:00',
+      defaultSpeed: savedSpeed || 0.8,
       familyBound: false,
       bindCode: '',
       useLocalMode: true,
@@ -123,18 +127,17 @@ Page({
   },
 
   async saveSetting(key, value) {
-    if (!app.globalData.cloudReady) {
-      wx.showToast({ title: '本地模式不保存设置', icon: 'none' })
-      return
-    }
+    wx.setStorageSync(`setting_${key}`, value)
 
-    try {
-      await wx.cloud.callFunction({
-        name: 'updateProfile',
-        data: { [key]: value }
-      })
-    } catch (e) {
-      console.error('Save setting failed:', e)
+    if (app.globalData.cloudReady) {
+      try {
+        await wx.cloud.callFunction({
+          name: 'updateProfile',
+          data: { [key]: value }
+        })
+      } catch (e) {
+        console.log('云端同步失败')
+      }
     }
   },
 
@@ -209,20 +212,28 @@ Page({
   },
 
   async clearAllData() {
-    if (!app.globalData.cloudReady) {
-      wx.showToast({ title: '本地模式无数据可清除', icon: 'none' })
-      return
+    let clearedCount = 0
+    try {
+      const keys = wx.getStorageInfoSync().keys || []
+      keys.forEach(key => {
+        if (key.startsWith('mandarin-progress-')) {
+          wx.removeStorageSync(key)
+          clearedCount++
+        }
+      })
+    } catch (e) {
+      console.error('Clear local failed:', e)
     }
 
-    try {
-      await wx.cloud.callFunction({
-        name: 'clearAllProgress'
-      })
-      wx.showToast({ title: '已清除', icon: 'success' })
-      this.setData({ streakDays: 0 })
-    } catch (e) {
-      console.error('Clear failed:', e)
-      wx.showToast({ title: '清除失败', icon: 'none' })
+    if (app.globalData.cloudReady) {
+      try {
+        await wx.cloud.callFunction({ name: 'clearAllProgress' })
+      } catch (e) {
+        console.log('云端清除失败或不存在')
+      }
     }
+
+    wx.showToast({ title: `已清除 ${clearedCount} 条记录`, icon: 'success' })
+    this.setData({ streakDays: 0 })
   }
 })

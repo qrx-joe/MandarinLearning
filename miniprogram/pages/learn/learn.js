@@ -36,6 +36,7 @@ Page({
     isPlaying: false,
     playbackRate: 0.8,
     progressPercent: 0,
+    timeProgressPercent: 0,
     currentMinute: '00',
     currentSecond: '00',
     isRecording: false,
@@ -205,7 +206,7 @@ Page({
         const min = Math.floor(this.data.studySeconds / 60)
         const sec = this.data.studySeconds % 60
         this.setData({
-          progressPercent: pct,
+          timeProgressPercent: pct,
           currentMinute: String(min).padStart(2, '0'),
           currentSecond: String(sec).padStart(2, '0')
         })

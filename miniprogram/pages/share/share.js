@@ -2,22 +2,31 @@ Page({
   data: {
     shareImagePath: '',
     streakDays: 0,
+    day: 0,
+    minutes: 0,
+    praise: '',
     today: '',
     quote: '',
     isGenerating: true
   },
 
   onLoad(options) {
-    const streak = parseInt(options.streak) || 0
+    const streak = parseInt(options.stars) || parseInt(options.streak) || 0
+    const day = parseInt(options.day) || 0
+    const minutes = parseInt(options.minutes) || 0
+    const praise = decodeURIComponent(options.praise || '')
     const today = this.formatToday()
     const quote = this.getRandomQuote()
-    
+
     this.setData({
       streakDays: streak,
+      day,
+      minutes,
+      praise,
       today,
       quote
     })
-    
+
     this.generateCard()
   },
 

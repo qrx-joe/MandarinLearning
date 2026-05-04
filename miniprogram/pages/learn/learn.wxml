@@ -6,7 +6,7 @@
       <text class="time-display">{{currentMinute}}:{{currentSecond}} / 10:00</text>
     </view>
     <view class="progress-bar-bg">
-      <view class="progress-bar-fill" style="width: {{progressPercent}}%"></view>
+      <view class="progress-bar-fill" style="width: {{timeProgressPercent}}%"></view>
     </view>
     <text class="segment-desc">第 {{currentItemIndex + 1}} / {{currentSegment.items.length}} 条</text>
   </view>
@@ -82,6 +82,6 @@
   <view class="bottom-actions">
     <button class="btn-prev" bindtap="prevItem" disabled="{{currentSegmentIndex === 0 && currentItemIndex === 0}}">上一条</button>
     <button class="btn-next" bindtap="nextItem" wx:if="{{!(currentSegmentIndex === 2 && currentItemIndex === currentSegment.items.length - 1)}}">下一条</button>
-    <button class="btn-finish btn-primary" bindtap="finishLearning" wx:if="{{currentSegmentIndex === 2 && currentItemIndex === currentSegment.items.length - 1}}">完成今日学习</button>
+    <button class="btn-finish btn-primary" bindtap="finishLearn" wx:if="{{currentSegmentIndex === 2 && currentItemIndex === currentSegment.items.length - 1}}">完成今日学习</button>
   </view>
 </view>

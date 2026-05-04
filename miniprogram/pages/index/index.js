@@ -1,11 +1,19 @@
 Page({
   data: {
-    todayDay: 1,
+    greeting: '',
+    todayDate: '',
+    dayIndex: 1,
     streakDays: 0,
-    isLearned: false,
+    todayDone: false,
+    todayMinutes: 0,
+    totalDays: 0,
     progressPercent: 0,
+    dailyContent: { title: '' },
+    currentWeek: 1,
+    weeklyTheme: { name: '', desc: '' },
+    isSupervisor: false,
     isLoading: true,
-    useLocalMode: false  // 本地调试模式标记
+    useLocalMode: true
   },
 
   onLoad() {
@@ -17,35 +25,98 @@ Page({
   },
 
   async loadData() {
-    const app = getApp()
     this.setData({ isLoading: true })
-    
-    // 云开发环境已废弃，直接使用本地模式
     this.loadLocalData()
   },
 
   loadLocalData() {
-    // 本地调试模式：显示模拟数据，不依赖云开发
-    const today = this.getTodayDay()
-    
+    const today = new Date()
+    const day = this.getTodayDay()
+    const todayStr = this.formatDate(today)
+
+    const todayRecord = wx.getStorageSync(`mandarin-progress-${todayStr}`)
+    const isDone = !!(todayRecord && todayRecord.completed)
+    const streak = this.calcStreakFromLocal()
+    const total = this.calcTotalDaysFromLocal()
+
+    const week = Math.ceil(day / 10)
+    const weekThemes = [
+      { name: '基础发音', desc: '从最简单的声母韵母开始，打好普通话基础' },
+      { name: '日常用语', desc: '学习生活中最常用的句子，每天练习就能开口说' },
+      { name: '情境对话', desc: '在模拟场景中练习，让普通话更自然流畅' },
+      { name: '流利表达', desc: '挑战更复杂的表达，让普通话成为习惯' },
+      { name: '综合运用', desc: '融会贯通，自信地用普通话交流' }
+    ]
+    const theme = weekThemes[Math.min(week, 5) - 1] || weekThemes[0]
+
     this.setData({
-      todayDay: today,
-      streakDays: 3,  // 模拟连续3天
-      isLearned: false,
-      progressPercent: 0,
+      greeting: this.getGreeting(today.getHours()),
+      todayDate: `${today.getMonth() + 1}月${today.getDate()}日`,
+      dayIndex: day,
+      streakDays: streak,
+      todayDone: isDone,
+      todayMinutes: isDone ? (todayRecord.minutes || 0) : 0,
+      totalDays: total,
+      progressPercent: isDone ? 100 : 0,
+      dailyContent: { title: `第 ${day} 天 · ${theme.name}` },
+      currentWeek: week,
+      weeklyTheme: theme,
+      isSupervisor: false,
       isLoading: false,
       useLocalMode: true
     })
-    
-    wx.showToast({
-      title: '本地预览模式',
-      icon: 'none',
-      duration: 2000
-    })
+  },
+
+  getGreeting(hour) {
+    if (hour < 12) return '早上好，开启今天的学习吧'
+    if (hour < 18) return '下午好，继续加油'
+    return '晚上好，温故而知新'
+  },
+
+  formatDate(d) {
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+  },
+
+  calcStreakFromLocal() {
+    let streak = 0
+    const today = new Date()
+    for (let i = 0; i < 50; i++) {
+      const d = new Date(today)
+      d.setDate(d.getDate() - i)
+      const str = this.formatDate(d)
+      const record = wx.getStorageSync(`mandarin-progress-${str}`)
+      if (record && record.completed) {
+        streak++
+      } else if (i > 0) {
+        break
+      }
+    }
+    return streak
+  },
+
+  calcTotalDaysFromLocal() {
+    let total = 0
+    try {
+      const keys = wx.getStorageInfoSync().keys || []
+      keys.forEach(key => {
+        if (key.startsWith('mandarin-progress-')) {
+          const record = wx.getStorageSync(key)
+          if (record && record.completed) total++
+        }
+      })
+    } catch (e) {
+      console.error('calcTotalDays failed:', e)
+    }
+    return total
   },
 
   getTodayDay() {
-    const start = new Date('2024-01-01')
+    let startStr = wx.getStorageSync('user_start_date')
+    if (!startStr) {
+      startStr = new Date().toISOString().slice(0, 10)
+      wx.setStorageSync('user_start_date', startStr)
+    }
+    const start = new Date(startStr)
     const today = new Date()
     const diff = Math.floor((today - start) / (1000 * 60 * 60 * 24))
     return (diff % 50) + 1

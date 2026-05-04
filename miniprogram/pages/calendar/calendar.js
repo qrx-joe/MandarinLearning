@@ -55,17 +55,6 @@ Page({
       }
     }
     
-    // 如果没有真实数据，模拟最近3天有打卡
-    if (records.length === 0) {
-      for (let i = 1; i <= Math.min(3, daysInMonth); i++) {
-        records.push({
-          date: `${year}-${String(month).padStart(2,'0')}-${String(i).padStart(2,'0')}`,
-          completed: true,
-          minutes: 15
-        })
-      }
-    }
-    
     return records
   },
 
@@ -107,7 +96,7 @@ Page({
       const record = records.find(r => r.date === dateStr)
       const isToday = isCurrentMonth && today.getDate() === day
       const completed = !!(record && record.completed)
-      const isPast = !isToday && day < today.getDate()
+      const isPast = isCurrentMonth && !isToday && day < today.getDate()
       
       if (completed) completedCount++
       
@@ -167,8 +156,15 @@ Page({
   },
 
   goLearn() {
+    let startStr = wx.getStorageSync('user_start_date')
+    if (!startStr) {
+      startStr = new Date().toISOString().slice(0, 10)
+      wx.setStorageSync('user_start_date', startStr)
+    }
+    const start = new Date(startStr)
     const today = new Date()
-    const day = (Math.floor((today - new Date('2024-01-01')) / (1000*60*60*24)) % 50) + 1
+    const diff = Math.floor((today - start) / (1000 * 60 * 60 * 24))
+    const day = (diff % 50) + 1
     wx.navigateTo({
       url: `/pages/learn/learn?day=${day}`
     })
