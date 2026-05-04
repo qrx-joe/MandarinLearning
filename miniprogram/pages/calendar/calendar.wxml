@@ -29,7 +29,7 @@
       <view 
         wx:for="{{days}}" 
         wx:key="date"
-        class="day-cell {{item.status}} {{item.isToday ? 'today' : ''}}"
+        class="day-cell {{item.empty ? 'empty' : ''}} {{item.status}} {{item.isToday ? 'today' : ''}}"
       >
         <text class="day-num">{{item.day}}</text>
         <text class="day-mark" wx:if="{{item.status === 'done'}}">✓</text>

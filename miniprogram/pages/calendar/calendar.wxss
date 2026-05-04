@@ -64,7 +64,7 @@
 }
 
 .day-cell {
-  aspect-ratio: 1;
+  height: 100rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -72,7 +72,6 @@
   border-radius: 16rpx;
   position: relative;
   padding: 12rpx;
-  min-height: 88rpx;
 }
 
 .day-cell.empty {

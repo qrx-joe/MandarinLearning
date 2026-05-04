@@ -98,7 +98,7 @@ Page({
     
     // Empty slots before 1st
     for (let i = 0; i < firstDay; i++) {
-      days.push({ empty: true, date: `empty-${i}` })
+      days.push({ empty: true, date: `empty-${i}`, day: '', status: '' })
     }
     
     // Calendar days
@@ -141,6 +141,9 @@ Page({
       segments: 3
     }
     
+    console.log('[calendar] firstDay:', firstDay, 'days.length:', days.length)
+    console.log('[calendar] days[0-7]:', days.slice(0, 7))
+
     this.setData({
       currentMonth: `${year}年${month}月`,
       monthStats: {
