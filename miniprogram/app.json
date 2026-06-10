@@ -9,15 +9,15 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#FF6B6B",
+    "navigationBarBackgroundColor": "#B85C38",
     "navigationBarTitleText": "暖声·向暖而行",
     "navigationBarTextStyle": "white",
-    "backgroundColor": "#F5F5F5"
+    "backgroundColor": "#F7F1EA"
   },
   "tabBar": {
-    "color": "#999999",
-    "selectedColor": "#FF6B6B",
-    "backgroundColor": "#FFFFFF",
+    "color": "#7D756D",
+    "selectedColor": "#B85C38",
+    "backgroundColor": "#FFFCF8",
     "borderStyle": "black",
     "list": [
       {

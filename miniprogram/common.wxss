@@ -1,105 +1,154 @@
-/* 公共样式 */
+/* 公共视觉系统：温和、专业、长辈友好 */
 
 page {
-  background: #f8f8f8;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: #F7F1EA;
+  color: #202124;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 32rpx;
 }
 
 .container {
-  padding-bottom: 40rpx;
+  padding: 28rpx 28rpx 48rpx;
+  box-sizing: border-box;
 }
 
 .card {
-  background: white;
-  border-radius: 16rpx;
-  margin: 20rpx 30rpx;
-  padding: 30rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+  background: #FFFCF8;
+  border: 2rpx solid #ECE1D6;
+  border-radius: 20rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(89, 70, 51, 0.06);
+  box-sizing: border-box;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-quiet {
+  min-height: 96rpx;
+  width: 100%;
+  border-radius: 48rpx;
+  font-size: 34rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
-  color: white;
-  border-radius: 40rpx;
-  font-size: 32rpx;
-  font-weight: 600;
-  padding: 24rpx 0;
+  background: #B85C38;
+  color: #FFFFFF;
   border: none;
-}
-
-.btn-primary::after {
-  border: none;
+  box-shadow: 0 10rpx 22rpx rgba(184, 92, 56, 0.18);
 }
 
 .btn-secondary {
-  background: white;
-  color: #FF6B6B;
-  border: 2rpx solid #FF6B6B;
-  border-radius: 40rpx;
-  font-size: 30rpx;
-  padding: 20rpx 0;
+  background: #FFFCF8;
+  color: #8F472B;
+  border: 3rpx solid #B85C38;
 }
 
-.btn-small {
-  background: #FF6B6B;
-  color: white;
-  border-radius: 8rpx;
-  font-size: 24rpx;
-  padding: 12rpx 24rpx;
+.btn-quiet {
+  background: #F1E8DD;
+  color: #4A4038;
+  border: 2rpx solid #E2D5C8;
+}
+
+.btn-primary::after,
+.btn-secondary::after,
+.btn-quiet::after {
   border: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.text-primary {
-  color: #FF6B6B;
+.btn-primary:active,
+.btn-secondary:active,
+.btn-quiet:active {
+  opacity: 0.86;
 }
 
-.text-secondary {
-  color: #666;
+.text-primary { color: #B85C38; }
+.text-secondary { color: #5F5A54; }
+.text-muted { color: #7D756D; }
+.text-success { color: #2F7D51; }
+.text-warning { color: #9A6A14; }
+.text-danger { color: #B33A2F; }
+.text-center { text-align: center; }
+.text-small { font-size: 28rpx; }
+.text-large { font-size: 48rpx; font-weight: 800; }
+
+.section-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 800;
+  color: #202124;
+  margin-bottom: 20rpx;
 }
 
-.text-muted {
-  color: #999;
+.eyebrow {
+  display: block;
+  font-size: 26rpx;
+  color: #7D756D;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin-bottom: 8rpx;
 }
 
-.text-center {
+.progress-bar-bg {
+  height: 20rpx;
+  background: #E9DED2;
+  border-radius: 999rpx;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: #B85C38;
+  border-radius: 999rpx;
+  transition: width 0.25s ease;
+}
+
+.divider {
+  height: 2rpx;
+  background: #ECE1D6;
+  margin: 24rpx 0;
+}
+
+.big-stat-card {
+  background: #FFFCF8;
+  border: 2rpx solid #ECE1D6;
+  border-radius: 20rpx;
+  padding: 32rpx 24rpx;
   text-align: center;
 }
 
-.flex {
-  display: flex;
+.big-stat-value {
+  display: block;
+  font-size: 54rpx;
+  font-weight: 800;
+  color: #B85C38;
 }
 
+.big-stat-label {
+  display: block;
+  font-size: 28rpx;
+  color: #5F5A54;
+  margin-top: 8rpx;
+}
+
+.flex { display: flex; }
 .flex-between {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 .flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-.gap-2 {
-  gap: 20rpx;
-}
-
-.mt-2 {
-  margin-top: 20rpx;
-}
-
-.mt-4 {
-  margin-top: 40rpx;
-}
-
-.mb-2 {
-  margin-bottom: 20rpx;
-}
-
-.p-3 {
-  padding: 30rpx;
-}
+.gap-2 { gap: 20rpx; }
+.mt-2 { margin-top: 20rpx; }
+.mt-4 { margin-top: 40rpx; }
+.mb-2 { margin-bottom: 20rpx; }
+.p-3 { padding: 30rpx; }
