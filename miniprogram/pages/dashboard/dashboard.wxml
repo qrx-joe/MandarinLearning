@@ -1,29 +1,27 @@
-<view class="container">
-  <!-- 个人头部 -->
-  <view class="family-header">
+<view class="container dashboard-page">
+  <view class="family-header card">
     <view class="family-avatar">
-      <text class="avatar-icon">📊</text>
+      <text class="avatar-icon">统</text>
     </view>
     <view class="family-info">
+      <text class="eyebrow">学习看板</text>
       <text class="family-name">我的学习统计</text>
       <view class="family-stats">
         <text class="stat-badge">连续 {{streakDays || 0}} 天</text>
-        <text class="stat-badge">总 {{totalDays || 0}} 天</text>
+        <text class="stat-badge">累计 {{totalDays || 0}} 天</text>
       </view>
     </view>
   </view>
 
-  <!-- 异常提醒 -->
-  <view class="alert-card" wx:if="{{missedDays >= 2}}">
-    <text class="alert-icon">⚠️</text>
+  <view class="alert-card card" wx:if="{{missedDays >= 2}}">
+    <text class="alert-icon">!</text>
     <view class="alert-content">
-      <text class="alert-title">注意：已连续 {{missedDays}} 天未打卡</text>
-      <text class="alert-desc">坚持学习，每天都有进步</text>
+      <text class="alert-title">已连续 {{missedDays}} 天未打卡</text>
+      <text class="alert-desc">今天先完成 10 分钟，别让节奏断太久。</text>
     </view>
     <button class="btn-remind" bindtap="goLearn">去打卡</button>
   </view>
 
-  <!-- 本周打卡 -->
   <view class="section-card card">
     <view class="section-header">
       <text class="section-title">本周打卡</text>
@@ -32,12 +30,14 @@
     <view class="week-grid">
       <view class="week-day" wx:for="{{weekDays}}" wx:key="date">
         <text class="week-label">{{item.label}}</text>
-        <view class="week-dot {{item.completed ? 'done' : ''}} {{item.isToday ? 'today' : ''}}"></view>
+        <view class="week-dot {{item.completed ? 'done' : ''}} {{item.isToday ? 'today' : ''}}">
+          <text wx:if="{{item.completed}}">✓</text>
+          <text wx:elif="{{item.isToday}}">今</text>
+        </view>
       </view>
     </view>
   </view>
 
-  <!-- 最近记录 -->
   <view class="section-card card" wx:if="{{recentRecords.length > 0}}">
     <view class="section-header">
       <text class="section-title">最近学习</text>
@@ -46,14 +46,13 @@
       <view class="record-item" wx:for="{{recentRecords}}" wx:key="date">
         <view class="record-left">
           <text class="record-date">{{item.date}}</text>
-          <text class="record-segments">完成了 {{item.segmentsCompleted || 0}} 个阶段</text>
+          <text class="record-segments">完成 {{item.segmentsCompleted || 0}} 个阶段</text>
         </view>
-        <text class="record-minutes">{{item.minutes}}分钟</text>
+        <text class="record-minutes">{{item.minutes}} 分钟</text>
       </view>
     </view>
   </view>
 
-  <!-- 月度趋势（简化） -->
   <view class="section-card card" wx:if="{{monthlyStats.length > 0}}">
     <view class="section-header">
       <text class="section-title">月度统计</text>

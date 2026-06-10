@@ -1,118 +1,119 @@
-/* 仪表盘 - 长辈友好风格 */
+/* 看板：统计清楚，少装饰 */
+
+.dashboard-page {
+  padding-top: 32rpx;
+}
 
 .family-header {
   display: flex;
   align-items: center;
-  gap: 30rpx;
-  padding: 48rpx 36rpx;
-  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
-  color: white;
-  margin-bottom: 24rpx;
-  border-radius: 28rpx;
+  gap: 28rpx;
+  padding: 34rpx 32rpx;
 }
 
 .family-avatar {
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.2);
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 28rpx;
+  background: #F1E8DD;
+  border: 2rpx solid #D9CABA;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .avatar-icon {
-  font-size: 60rpx;
+  font-size: 40rpx;
+  font-weight: 800;
+  color: #8F472B;
 }
 
 .family-info {
   flex: 1;
+  min-width: 0;
 }
 
 .family-name {
-  font-size: 40rpx;
-  font-weight: 700;
   display: block;
-  margin-bottom: 12rpx;
+  font-size: 42rpx;
+  font-weight: 800;
+  color: #202124;
+  margin-bottom: 16rpx;
 }
 
 .family-stats {
   display: flex;
-  gap: 16rpx;
+  gap: 12rpx;
+  flex-wrap: wrap;
 }
 
 .stat-badge {
-  background: rgba(255,255,255,0.25);
-  padding: 8rpx 20rpx;
-  border-radius: 20rpx;
-  font-size: 26rpx;
-}
-
-.empty-state {
-  text-align: center;
-  padding: 80rpx 40rpx;
-}
-
-.empty-icon {
-  font-size: 80rpx;
-  display: block;
-  margin-bottom: 20rpx;
-}
-
-.empty-title {
-  font-size: 36rpx;
-  color: #666;
-  display: block;
-  margin-bottom: 12rpx;
-}
-
-.empty-desc {
-  font-size: 30rpx;
-  color: #999;
+  min-height: 48rpx;
+  padding: 0 18rpx;
+  border-radius: 999rpx;
+  background: #F7F1EA;
+  color: #5F5A54;
+  font-size: 25rpx;
+  font-weight: 800;
+  line-height: 48rpx;
 }
 
 .alert-card {
   display: flex;
   align-items: center;
-  gap: 20rpx;
-  padding: 32rpx;
-  background: #FFF5F5;
-  border: 3rpx solid #FFCCCC;
-  border-radius: 24rpx;
-  margin: 0 32rpx 24rpx;
+  gap: 18rpx;
+  background: #FFF6F2;
+  border-color: #E7C5BC;
 }
 
 .alert-icon {
-  font-size: 48rpx;
+  width: 54rpx;
+  height: 54rpx;
+  border-radius: 50%;
+  background: #B33A2F;
+  color: #FFFFFF;
+  font-size: 32rpx;
+  font-weight: 800;
+  line-height: 54rpx;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 .alert-content {
   flex: 1;
+  min-width: 0;
 }
 
 .alert-title {
-  font-size: 32rpx;
-  color: #FF4444;
-  font-weight: 600;
   display: block;
+  font-size: 31rpx;
+  color: #B33A2F;
+  font-weight: 800;
+  line-height: 1.35;
 }
 
 .alert-desc {
-  font-size: 28rpx;
-  color: #999;
-  margin-top: 8rpx;
   display: block;
+  font-size: 27rpx;
+  color: #7D756D;
+  margin-top: 6rpx;
+  line-height: 1.4;
 }
 
 .btn-remind {
-  background: #FF6B6B;
-  color: white;
-  font-size: 28rpx;
-  padding: 16rpx 30rpx;
-  border-radius: 12rpx;
-  margin: 0;
-  line-height: 1.5;
+  min-width: 128rpx;
+  min-height: 70rpx;
+  background: #B85C38;
+  color: #FFFFFF;
   border: none;
+  border-radius: 999rpx;
+  font-size: 28rpx;
+  font-weight: 800;
+  padding: 0 22rpx;
+  margin: 0;
+  line-height: 70rpx;
+  flex-shrink: 0;
 }
 
 .btn-remind::after {
@@ -123,24 +124,30 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20rpx;
   margin-bottom: 28rpx;
 }
 
-.section-title {
-  font-size: 36rpx;
-  font-weight: 700;
-  color: #1A1A1A;
+.section-header .section-title {
+  margin-bottom: 0;
 }
 
 .section-sub {
-  font-size: 30rpx;
-  color: #FF6B6B;
-  font-weight: 600;
+  min-height: 48rpx;
+  padding: 0 18rpx;
+  border-radius: 999rpx;
+  background: #F1E8DD;
+  color: #8F472B;
+  font-size: 27rpx;
+  font-weight: 800;
+  line-height: 48rpx;
+  flex-shrink: 0;
 }
 
 .week-grid {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10rpx;
 }
 
 .week-day {
@@ -151,98 +158,117 @@
 }
 
 .week-label {
-  font-size: 28rpx;
-  color: #999;
+  font-size: 26rpx;
+  color: #7D756D;
+  font-weight: 800;
 }
 
 .week-dot {
-  width: 56rpx;
-  height: 56rpx;
-  border-radius: 50%;
-  background: #F0E6E0;
-  border: 4rpx solid #ddd;
+  width: 62rpx;
+  height: 62rpx;
+  border-radius: 20rpx;
+  background: #F1E8DD;
+  border: 2rpx solid #D9CABA;
+  color: #8D837A;
+  font-size: 22rpx;
+  font-weight: 800;
+  line-height: 62rpx;
+  text-align: center;
 }
 
 .week-dot.done {
-  background: #4CD964;
-  border-color: #4CD964;
+  background: #EAF4ED;
+  border-color: #B9D8C4;
+  color: #1F5E3A;
 }
 
 .week-dot.today {
-  border-color: #FF6B6B;
+  border-color: #B85C38;
 }
 
 .record-list {
-  display: flex;
-  flex-direction: column;
-  gap: 24rpx;
+  border-top: 2rpx solid #ECE1D6;
 }
 
 .record-item {
+  min-height: 104rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24rpx 0;
-  border-bottom: 2rpx solid #F0E6E0;
+  gap: 24rpx;
+  padding: 20rpx 0;
+  border-bottom: 2rpx solid #ECE1D6;
+}
+
+.record-item:last-child {
+  border-bottom: none;
+}
+
+.record-left {
+  flex: 1;
+  min-width: 0;
 }
 
 .record-date {
-  font-size: 32rpx;
-  color: #1A1A1A;
   display: block;
-  font-weight: 500;
+  font-size: 32rpx;
+  color: #202124;
+  font-weight: 800;
 }
 
 .record-segments {
-  font-size: 28rpx;
-  color: #999;
-  margin-top: 8rpx;
   display: block;
+  font-size: 26rpx;
+  color: #7D756D;
+  margin-top: 6rpx;
 }
 
 .record-minutes {
-  font-size: 36rpx;
-  color: #FF6B6B;
-  font-weight: 700;
+  color: #8F472B;
+  font-size: 31rpx;
+  font-weight: 800;
+  flex-shrink: 0;
 }
 
 .month-grid {
   display: flex;
   flex-direction: column;
-  gap: 24rpx;
+  gap: 22rpx;
 }
 
 .month-item {
   display: flex;
   align-items: center;
-  gap: 20rpx;
+  gap: 18rpx;
 }
 
 .month-label {
-  font-size: 28rpx;
-  color: #666;
   width: 100rpx;
+  color: #5F5A54;
+  font-size: 28rpx;
+  font-weight: 800;
   flex-shrink: 0;
 }
 
 .month-bar-wrapper {
   flex: 1;
-  height: 28rpx;
-  background: #F0E6E0;
-  border-radius: 14rpx;
+  height: 24rpx;
+  background: #E9DED2;
+  border-radius: 999rpx;
   overflow: hidden;
 }
 
 .month-bar {
   height: 100%;
-  background: #FF6B6B;
-  border-radius: 14rpx;
+  background: #B85C38;
+  border-radius: 999rpx;
 }
 
 .month-count {
-  font-size: 28rpx;
-  color: #999;
-  width: 80rpx;
+  width: 78rpx;
   text-align: right;
+  color: #7D756D;
+  font-size: 27rpx;
+  font-weight: 800;
   flex-shrink: 0;
 }
