@@ -1,43 +1,45 @@
-.container {
-  padding: 24rpx 0;
-}
-
-.share-canvas {
-  width: 750rpx;
-  height: 1000rpx;
-  display: block;
-  margin: 0 auto;
-  border-radius: 20rpx;
-  box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.15);
+.share-page {
+  padding-top: 32rpx;
 }
 
 .preview-area {
   position: relative;
-  padding: 30rpx 0;
+  padding: 30rpx 26rpx 34rpx;
+}
+
+.share-canvas {
+  width: 690rpx;
+  height: 920rpx;
+  display: block;
+  margin: 20rpx auto 0;
+  border-radius: 22rpx;
+  border: 2rpx solid #ECE1D6;
+  box-shadow: 0 12rpx 30rpx rgba(89, 70, 51, 0.10);
+  overflow: hidden;
 }
 
 .generating-overlay {
   position: absolute;
-  top: 30rpx;
-  left: 30rpx;
-  right: 30rpx;
-  bottom: 30rpx;
+  left: 26rpx;
+  right: 26rpx;
+  bottom: 34rpx;
+  height: 920rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(255,255,255,0.9);
-  border-radius: 20rpx;
+  background: rgba(255, 252, 248, 0.92);
+  border-radius: 22rpx;
 }
 
 .loading-spinner {
-  width: 60rpx;
-  height: 60rpx;
-  border: 6rpx solid #f0f0f0;
-  border-top-color: #FF6B6B;
+  width: 58rpx;
+  height: 58rpx;
+  border: 6rpx solid #E9DED2;
+  border-top-color: #B85C38;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin-bottom: 20rpx;
+  margin-bottom: 18rpx;
 }
 
 @keyframes spin {
@@ -46,55 +48,65 @@
 
 .loading-text {
   font-size: 28rpx;
-  color: #666;
+  color: #5F5A54;
+  font-weight: 800;
 }
 
 .action-buttons {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 24rpx;
-  padding: 0 40rpx;
-  margin-top: 32rpx;
+  gap: 18rpx;
+  margin-bottom: 24rpx;
 }
 
-.btn-save, .btn-share {
+.btn-save,
+.btn-share {
+  flex: 1;
+  min-height: 96rpx;
+  border-radius: 48rpx;
+  font-size: 31rpx;
+  font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12rpx;
-  padding: 20rpx 0;
-  border-radius: 32rpx;
-  font-size: 28rpx;
-  font-weight: 600;
   border: none;
-  flex: 1;
-  max-width: 260rpx;
+  padding: 0 16rpx;
 }
 
-.btn-save::after, .btn-share::after {
+.btn-save::after,
+.btn-share::after {
   border: none;
 }
 
 .btn-save {
-  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
-  color: white;
-  box-shadow: 0 4rpx 16rpx rgba(255,107,107,0.3);
+  background: #B85C38;
+  color: #FFFFFF;
+  box-shadow: 0 10rpx 22rpx rgba(184, 92, 56, 0.18);
 }
 
 .btn-share {
-  background: white;
-  color: #FF6B6B;
-  border: 2rpx solid #FF6B6B;
+  background: #FFFCF8;
+  color: #8F472B;
+  border: 3rpx solid #B85C38;
 }
 
 .btn-icon {
-  font-size: 32rpx;
+  width: 42rpx;
+  height: 42rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  font-size: 22rpx;
+  line-height: 42rpx;
+  text-align: center;
+}
+
+.btn-share .btn-icon {
+  background: #F1E8DD;
 }
 
 .tip-text {
   text-align: center;
-  margin-top: 24rpx;
-  font-size: 24rpx;
-  color: #999;
+  font-size: 26rpx;
+  color: #7D756D;
+  line-height: 1.5;
 }

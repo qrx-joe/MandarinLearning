@@ -1,5 +1,7 @@
-<view class="container">
-  <view class="preview-area">
+<view class="container share-page">
+  <view class="preview-area card">
+    <text class="eyebrow">分享预览</text>
+    <text class="section-title">今日打卡海报</text>
     <canvas canvas-id="shareCanvas" class="share-canvas" style="width: 375px; height: 500px;"></canvas>
     <view class="generating-overlay" wx:if="{{isGenerating}}">
       <view class="loading-spinner"></view>
@@ -9,11 +11,11 @@
 
   <view class="action-buttons">
     <button class="btn-save" bindtap="saveImage" wx:if="{{!isGenerating}}">
-      <text class="btn-icon">💾</text>
+      <text class="btn-icon">存</text>
       <text class="btn-text">保存到相册</text>
     </button>
     <button class="btn-share" open-type="share" wx:if="{{!isGenerating}}">
-      <text class="btn-icon">📤</text>
+      <text class="btn-icon">享</text>
       <text class="btn-text">分享给好友</text>
     </button>
   </view>

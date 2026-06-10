@@ -70,60 +70,61 @@ Page({
     const h = 500
 
     // 背景
-    const gradient = ctx.createLinearGradient(0, 0, w, h)
-    gradient.addColorStop(0, '#FF8E8E')
-    gradient.addColorStop(1, '#FF6B6B')
-    ctx.fillStyle = gradient
+    ctx.fillStyle = '#F7F1EA'
     ctx.fillRect(0, 0, w, h)
 
-    // 装饰圆（放大，容纳文字）
-    ctx.beginPath()
-    ctx.arc(w / 2, 130, 85, 0, Math.PI * 2)
-    ctx.fillStyle = 'rgba(255,255,255,0.15)'
+    // 纸面卡片
+    this.drawRoundRect(ctx, 28, 28, w - 56, h - 56, 22)
+    ctx.fillStyle = '#FFFCF8'
     ctx.fill()
+    ctx.strokeStyle = '#ECE1D6'
+    ctx.lineWidth = 1
+    ctx.stroke()
 
-    // 顶部图标
-    ctx.font = 'normal 40px sans-serif'
+    ctx.fillStyle = '#7D756D'
+    ctx.font = 'bold 14px sans-serif'
     ctx.textAlign = 'center'
-    ctx.fillText('🔥', w / 2, 105)
+    ctx.fillText('暖声·向暖而行', w / 2, 76)
 
     // 连续天数
-    ctx.fillStyle = 'white'
+    ctx.fillStyle = '#202124'
     ctx.font = 'bold 60px sans-serif'
     ctx.fillText(`${this.data.streakDays}`, w / 2, 148)
 
+    ctx.fillStyle = '#5F5A54'
     ctx.font = 'normal 18px sans-serif'
     ctx.fillText('连续打卡天数', w / 2, 180)
 
     // 分隔线
     ctx.beginPath()
-    ctx.moveTo(75, 240)
-    ctx.lineTo(w - 75, 240)
-    ctx.strokeStyle = 'rgba(255,255,255,0.4)'
+    ctx.moveTo(72, 226)
+    ctx.lineTo(w - 72, 226)
+    ctx.strokeStyle = '#ECE1D6'
     ctx.lineWidth = 1
     ctx.stroke()
 
     // 日期
+    ctx.fillStyle = '#8F472B'
     ctx.font = 'normal 20px sans-serif'
-    ctx.fillText(this.data.today, w / 2, 280)
+    ctx.fillText(this.data.today, w / 2, 270)
 
     // 完成标签
-    this.drawRoundRect(ctx, w / 2 - 60, 305, 120, 35, 17)
-    ctx.fillStyle = 'rgba(255,255,255,0.25)'
+    this.drawRoundRect(ctx, w / 2 - 68, 296, 136, 38, 19)
+    ctx.fillStyle = '#EAF4ED'
     ctx.fill()
 
     ctx.font = 'bold 16px sans-serif'
-    ctx.fillStyle = 'white'
-    ctx.fillText('今日已完成', w / 2, 328)
+    ctx.fillStyle = '#1F5E3A'
+    ctx.fillText('今日已完成', w / 2, 320)
 
     // 底部引用
     ctx.font = 'normal 15px sans-serif'
-    ctx.fillStyle = 'rgba(255,255,255,0.8)'
+    ctx.fillStyle = '#5F5A54'
     ctx.fillText(`"${this.data.quote}"`, w / 2, 390)
 
     // 小程序标识
     ctx.font = 'normal 12px sans-serif'
-    ctx.fillStyle = 'rgba(255,255,255,0.5)'
+    ctx.fillStyle = '#8D837A'
     ctx.fillText('暖声·向暖而行 · 每天十分钟', w / 2, 460)
 
     ctx.draw(false)
