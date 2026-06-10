@@ -1,42 +1,44 @@
-<view class="container">
-  <!-- 顶部欢迎区 -->
-  <view class="welcome-card card">
+<view class="container home-page">
+  <view class="today-panel card" wx:if="{{!todayDone}}">
+    <view class="today-meta">
+      <text class="eyebrow">{{todayDate}}</text>
+      <text class="streak-pill" wx:if="{{streakDays > 0}}">连续 {{streakDays}} 天</text>
+      <text class="streak-pill muted" wx:else>今日未开始</text>
+    </view>
     <text class="greeting">{{greeting}}</text>
-    <text class="date">{{todayDate}}</text>
-    <view class="streak-row" wx:if="{{streakDays > 0}}">
-      <text class="streak-text">连续打卡 {{streakDays}} 天 🔥</text>
-    </view>
-    <view class="streak-row" wx:else>
-      <text class="streak-text text-secondary">今天开始你的普通话学习吧</text>
-    </view>
-  </view>
+    <text class="task-title">今天第 {{dayIndex}} 天</text>
+    <text class="task-desc">{{dailyContent.title || '慢速词语跟读 - 日常短句 - 流利度挑战'}}</text>
 
-  <!-- 今日任务卡片 -->
-  <view class="task-card card" wx:if="{{!todayDone}}">
-    <view class="task-header">
-      <text class="task-title">今天第 {{dayIndex}} 天</text>
+    <view class="lesson-plan">
+      <view class="plan-step">
+        <text class="plan-num">1</text>
+        <text class="plan-label">听示范</text>
+      </view>
+      <view class="plan-step">
+        <text class="plan-num">2</text>
+        <text class="plan-label">跟读</text>
+      </view>
+      <view class="plan-step">
+        <text class="plan-num">3</text>
+        <text class="plan-label">回听</text>
+      </view>
     </view>
-    <text class="task-desc">{{dailyContent.title || '慢速词语跟读 → 日常短句 → 流利度挑战'}}</text>
-    
+
     <view class="progress-section">
       <view class="progress-bar-bg">
         <view class="progress-bar-fill" style="width: 0%"></view>
       </view>
-      <text class="progress-text">目标：10 分钟</text>
+      <text class="progress-text">预计 10 分钟，完成后自动记录打卡</text>
     </view>
-    
-    <button class="btn-primary start-btn" bindtap="startLearning">
-      开始学习
-    </button>
-    <text class="btn-hint">点这里开始今天的发音练习</text>
+
+    <button class="btn-primary start-btn" bindtap="startLearning">开始今天练习</button>
   </view>
 
-  <!-- 已完成状态 -->
   <view class="done-card card" wx:if="{{todayDone}}">
-    <text class="done-icon">✅</text>
-    <text class="done-title">今日已完成！</text>
-    <text class="done-subtitle">打卡成功，明天继续加油</text>
-    
+    <text class="done-status">已完成</text>
+    <text class="done-title">今天的普通话练习已打卡</text>
+    <text class="done-subtitle">明天继续保持这个节奏。</text>
+
     <view class="done-stats">
       <view class="stat-item">
         <text class="stat-value">{{todayMinutes}}</text>
@@ -51,30 +53,35 @@
         <text class="stat-label">累计</text>
       </view>
     </view>
-    
+
     <button class="btn-secondary" bindtap="reviewToday">复习今日内容</button>
   </view>
 
-  <!-- 本周主题 -->
   <view class="theme-card card">
     <view class="theme-header">
-      <text class="theme-title">本周主题</text>
+      <text class="section-title">本周主题</text>
       <text class="theme-week">第 {{currentWeek}} 周</text>
     </view>
     <text class="theme-name">{{weeklyTheme.name}}</text>
     <text class="theme-desc">{{weeklyTheme.desc}}</text>
   </view>
 
-  <!-- 快捷入口 -->
   <view class="quick-card card">
+    <text class="section-title">常用入口</text>
     <view class="quick-grid">
       <view class="quick-item" bindtap="goCalendar">
-        <view class="quick-icon-bg">📅</view>
-        <text class="quick-label">打卡日历</text>
+        <view class="quick-mark">日</view>
+        <view class="quick-copy">
+          <text class="quick-label">打卡日历</text>
+          <text class="quick-desc">查看本月练习记录</text>
+        </view>
       </view>
       <view class="quick-item" bindtap="goSettings">
-        <view class="quick-icon-bg">⚙️</view>
-        <text class="quick-label">设置</text>
+        <view class="quick-mark">设</view>
+        <view class="quick-copy">
+          <text class="quick-label">个人设置</text>
+          <text class="quick-desc">提醒时间与语速</text>
+        </view>
       </view>
     </view>
   </view>

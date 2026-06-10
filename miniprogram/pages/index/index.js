@@ -122,13 +122,13 @@ Page({
 
   startLearning() {
     wx.navigateTo({
-      url: `/pages/learn/learn?day=${this.data.todayDay}`
+      url: `/pages/learn/learn?day=${this.data.dayIndex}`
     })
   },
 
   reviewToday() {
     wx.navigateTo({
-      url: `/pages/learn/learn?day=${this.data.todayDay}&review=true`
+      url: `/pages/learn/learn?day=${this.data.dayIndex}&review=true`
     })
   },
 
@@ -152,7 +152,7 @@ Page({
 
   continueLearn() {
     wx.navigateTo({
-      url: `/pages/learn/learn?day=${this.data.todayDay}&review=true`
+      url: `/pages/learn/learn?day=${this.data.dayIndex}&review=true`
     })
   }
 })
