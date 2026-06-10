@@ -1,41 +1,39 @@
-<view class="container">
-  <!-- 用户信息 -->
+<view class="container profile-page">
   <view class="user-card card">
     <view class="user-avatar" bindtap="chooseAvatar">
       <image wx:if="{{avatarUrl}}" class="avatar-img" src="{{avatarUrl}}" mode="aspectFill" />
-      <text wx:else class="avatar-text">👤</text>
-      <view class="avatar-badge">📷</view>
+      <text wx:else class="avatar-text">人</text>
+      <view class="avatar-badge">换</view>
     </view>
     <view class="user-info">
       <view class="user-name-wrap" bindtap="editNickname">
         <text class="user-name">{{nickname}}</text>
-        <text class="edit-icon">✏️</text>
+        <text class="edit-icon">编辑</text>
       </view>
       <text class="user-streak">连续打卡 {{streakDays}} 天</text>
     </view>
   </view>
 
-  <!-- 设置列表 -->
-  <view class="settings-list">
-    
-    <!-- 每日提醒 -->
+  <view class="settings-list card">
+    <text class="section-title">学习设置</text>
+
     <view class="setting-item">
       <view class="setting-left">
-        <text class="setting-icon">⏰</text>
+        <text class="setting-icon">醒</text>
         <view class="setting-info">
           <text class="setting-title">每日提醒</text>
           <text class="setting-desc">{{reminderTime || '20:00'}} 提醒学习</text>
         </view>
       </view>
-      <switch checked="{{reminderEnabled}}" bindchange="toggleReminder" color="#FF6B6B" />
+      <switch checked="{{reminderEnabled}}" bindchange="toggleReminder" color="#B85C38" />
     </view>
 
-    <!-- 提醒时间 -->
     <view class="setting-item" wx:if="{{reminderEnabled}}">
       <view class="setting-left">
-        <text class="setting-icon">🕐</text>
+        <text class="setting-icon">时</text>
         <view class="setting-info">
           <text class="setting-title">提醒时间</text>
+          <text class="setting-desc">选择适合自己的练习时间</text>
         </view>
       </view>
       <picker mode="time" value="{{reminderTime}}" bindchange="setReminderTime">
@@ -43,10 +41,9 @@
       </picker>
     </view>
 
-    <!-- 默认语速 -->
-    <view class="setting-item">
+    <view class="setting-item speed-setting">
       <view class="setting-left">
-        <text class="setting-icon">🗣</text>
+        <text class="setting-icon">速</text>
         <view class="setting-info">
           <text class="setting-title">默认语速</text>
           <text class="setting-desc">跟读音频默认速度</text>
@@ -58,23 +55,24 @@
         <view class="speed-option {{defaultSpeed === 1.2 ? 'active' : ''}}" bindtap="setDefaultSpeed" data-speed="1.2">快</view>
       </view>
     </view>
+  </view>
 
-    <!-- 数据管理 -->
+  <view class="settings-list card">
+    <text class="section-title">数据管理</text>
     <view class="setting-item danger" bindtap="showClearConfirm">
       <view class="setting-left">
-        <text class="setting-icon">🗑</text>
+        <text class="setting-icon danger">清</text>
         <view class="setting-info">
           <text class="setting-title">清除学习记录</text>
-          <text class="setting-desc">重置所有打卡数据（不可恢复）</text>
+          <text class="setting-desc">重置所有打卡数据，不可恢复</text>
         </view>
       </view>
       <text class="arrow">›</text>
     </view>
   </view>
 
-  <!-- 关于 -->
   <view class="about-section">
     <text class="about-text">暖声·向暖而行 v1.0</text>
-    <text class="about-text">为家人设计的学习工具</text>
+    <text class="about-text">为家人设计的普通话学习工具</text>
   </view>
 </view>
