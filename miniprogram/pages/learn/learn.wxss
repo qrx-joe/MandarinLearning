@@ -1,172 +1,205 @@
-/* 学习页 - 长辈友好风格 */
+/* 学习页：练习台 */
 
-.progress-header {
-  padding: 32rpx 0;
+.learn-page {
+  padding-top: 26rpx;
+}
+
+.practice-header {
+  padding: 0 4rpx 26rpx;
 }
 
 .progress-top-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20rpx;
+  align-items: flex-end;
+  gap: 24rpx;
+  margin-bottom: 18rpx;
 }
 
 .segment-label {
-  font-size: 36rpx;
-  font-weight: 700;
-  color: #1A1A1A;
+  display: block;
+  font-size: 42rpx;
+  line-height: 1.25;
+  font-weight: 800;
+  color: #202124;
 }
 
 .time-display {
+  flex-shrink: 0;
   font-size: 32rpx;
-  color: #FF6B6B;
-  font-weight: 600;
+  color: #8F472B;
+  font-weight: 800;
+  padding-bottom: 4rpx;
 }
 
-.progress-bar-bg {
-  height: 28rpx;
-  background: #F0E6E0;
-  border-radius: 14rpx;
-  margin-bottom: 16rpx;
+.practice-header .progress-bar-bg {
+  height: 22rpx;
+  margin-bottom: 14rpx;
 }
 
-.progress-bar-fill {
-  height: 100%;
-  background: #FF6B6B;
-  border-radius: 14rpx;
+.progress-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20rpx;
 }
 
 .segment-desc {
-  font-size: 30rpx;
-  color: #999;
+  font-size: 28rpx;
+  color: #7D756D;
 }
 
-/* 内容卡片 */
 .content-card {
-  margin-bottom: 24rpx;
+  margin-bottom: 22rpx;
 }
 
 .content-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 28rpx;
+  gap: 20rpx;
+  margin-bottom: 26rpx;
 }
 
 .segment-badge {
+  min-height: 52rpx;
+  padding: 0 22rpx;
+  border-radius: 999rpx;
+  background: #F1E8DD;
+  color: #8F472B;
   font-size: 28rpx;
-  color: #FF6B6B;
-  background: #FFF5F5;
-  padding: 8rpx 24rpx;
-  border-radius: 20rpx;
-  font-weight: 500;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
 }
 
 .speed-control {
   display: flex;
   align-items: center;
+  gap: 12rpx;
 }
 
 .speed-label {
   font-size: 28rpx;
-  color: #666;
-  margin-right: 12rpx;
+  color: #5F5A54;
 }
 
 .speed-options {
   display: flex;
-  gap: 12rpx;
+  gap: 8rpx;
+  padding: 6rpx;
+  border-radius: 22rpx;
+  background: #F1E8DD;
 }
 
 .speed-btn {
+  min-width: 64rpx;
+  min-height: 54rpx;
+  border-radius: 18rpx;
+  color: #5F5A54;
   font-size: 28rpx;
-  color: #666;
-  padding: 10rpx 24rpx;
-  border-radius: 16rpx;
-  background: #F5F5F5;
-  border: 2rpx solid #F5F5F5;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .speed-btn.active {
-  background: #FF6B6B;
-  color: #fff;
-  border-color: #FF6B6B;
+  background: #B85C38;
+  color: #FFFFFF;
 }
 
-/* 句子区域 */
 .sentence-area {
-  background: #FFF9F5;
-  border-radius: 24rpx;
-  padding: 40rpx 32rpx;
-  margin-bottom: 32rpx;
+  background: #F7F1EA;
+  border: 2rpx solid #ECE1D6;
+  border-radius: 20rpx;
+  padding: 36rpx 28rpx;
+  margin-bottom: 28rpx;
+}
+
+.sentence-label {
+  display: block;
+  font-size: 26rpx;
+  color: #7D756D;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 12rpx;
 }
 
 .sentence-text {
-  font-size: 52rpx;
-  font-weight: 700;
-  color: #1A1A1A;
-  line-height: 1.6;
   display: block;
-  margin-bottom: 20rpx;
+  font-size: 58rpx;
+  font-weight: 800;
+  color: #202124;
+  line-height: 1.35;
+  margin-bottom: 18rpx;
   text-align: center;
 }
 
 .sentence-pinyin {
-  font-size: 36rpx;
-  color: #999;
-  line-height: 1.5;
   display: block;
-  margin-bottom: 20rpx;
+  font-size: 36rpx;
+  color: #7D756D;
+  line-height: 1.5;
+  margin-bottom: 22rpx;
   text-align: center;
 }
 
 .highlight-box {
-  background: #FFF5F5;
-  border-left: 6rpx solid #FF6B6B;
-  padding: 20rpx 24rpx;
-  border-radius: 12rpx;
+  background: #FFFCF8;
+  border-left: 8rpx solid #B85C38;
+  border-radius: 16rpx;
+  padding: 20rpx 22rpx;
 }
 
 .highlight-label {
+  display: block;
   font-size: 28rpx;
-  color: #FF6B6B;
-  font-weight: 600;
+  color: #8F472B;
+  font-weight: 800;
+  margin-bottom: 6rpx;
 }
 
 .highlight-text {
+  display: block;
   font-size: 30rpx;
-  color: #666;
+  line-height: 1.55;
+  color: #4A4038;
 }
 
-/* 音频控制 */
 .audio-area {
   display: flex;
   flex-direction: column;
-  gap: 24rpx;
+  gap: 18rpx;
 }
 
 .btn-play {
-  background: #FF6B6B;
-  color: #fff;
+  min-height: 104rpx;
+  background: #B85C38;
+  color: #FFFFFF;
   border: none;
   border-radius: 52rpx;
-  padding: 28rpx 48rpx;
   font-size: 34rpx;
-  font-weight: 600;
+  font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 16rpx;
-  min-height: 100rpx;
-  box-shadow: 0 4rpx 16rpx rgba(255,107,107,0.25);
+  box-shadow: 0 10rpx 22rpx rgba(184, 92, 56, 0.18);
 }
 
-.btn-play::after {
+.btn-play::after,
+.btn-record::after,
+.btn-recording::after,
+.btn-listen::after,
+.btn-prev::after,
+.btn-next::after {
   border: none;
 }
 
 .btn-play-icon {
-  font-size: 36rpx;
+  width: 42rpx;
+  font-size: 34rpx;
+  text-align: center;
 }
 
 .btn-play-text {
@@ -175,134 +208,107 @@
 
 .record-row {
   display: flex;
-  gap: 20rpx;
+  gap: 16rpx;
+}
+
+.btn-record,
+.btn-recording,
+.btn-listen {
+  flex: 1;
+  min-height: 96rpx;
+  border-radius: 48rpx;
+  font-size: 30rpx;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  padding: 18rpx 20rpx;
 }
 
 .btn-record {
-  flex: 1;
-  background: #fff;
-  color: #FF6B6B;
-  border: 3rpx solid #FF6B6B;
-  border-radius: 52rpx;
-  padding: 24rpx 36rpx;
-  font-size: 30rpx;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12rpx;
-  min-height: 96rpx;
-}
-
-.btn-record::after {
-  border: none;
+  background: #FFFCF8;
+  color: #8F472B;
+  border: 3rpx solid #B85C38;
 }
 
 .btn-recording {
-  flex: 1;
-  background: #ff4444;
-  color: #fff;
-  border: none;
-  border-radius: 52rpx;
-  padding: 24rpx 36rpx;
-  font-size: 30rpx;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12rpx;
-  min-height: 96rpx;
-  animation: pulse 1s infinite;
-}
-
-.btn-recording::after {
+  background: #B33A2F;
+  color: #FFFFFF;
   border: none;
 }
 
 .btn-listen {
-  flex: 1;
-  background: #fff;
-  color: #666;
-  border: 3rpx solid #ddd;
-  border-radius: 52rpx;
-  padding: 24rpx 36rpx;
-  font-size: 30rpx;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12rpx;
-  min-height: 96rpx;
+  background: #F1E8DD;
+  color: #4A4038;
+  border: 2rpx solid #D9CABA;
 }
 
-.btn-listen::after {
-  border: none;
+.btn-record-icon,
+.btn-listen-icon {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: rgba(184, 92, 56, 0.12);
+  font-size: 24rpx;
+  line-height: 44rpx;
+  text-align: center;
 }
 
-.btn-record-icon, .btn-listen-icon {
-  font-size: 36rpx;
+.btn-recording .btn-record-icon {
+  background: rgba(255, 255, 255, 0.2);
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.03); }
-}
-
-/* 分段导航 */
 .segment-nav {
-  display: flex;
-  justify-content: space-between;
-  gap: 20rpx;
-  padding: 24rpx 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14rpx;
+  margin-bottom: 20rpx;
 }
 
 .nav-btn {
-  flex: 1;
-  text-align: center;
-  padding: 24rpx 0;
-  font-size: 32rpx;
-  color: #666;
-  background: #fff;
-  border-radius: 24rpx;
-  border: 3rpx solid #F0E6E0;
-  font-weight: 500;
+  min-height: 88rpx;
+  border-radius: 18rpx;
+  background: #FFFCF8;
+  color: #5F5A54;
+  border: 2rpx solid #ECE1D6;
+  font-size: 31rpx;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-btn.active {
-  background: #FF6B6B;
-  color: #fff;
-  border-color: #FF6B6B;
+  background: #F1E8DD;
+  color: #8F472B;
+  border-color: #B85C38;
 }
 
-/* 底部操作 */
 .bottom-actions {
   display: flex;
-  justify-content: space-between;
-  gap: 20rpx;
-  padding: 24rpx 0 48rpx;
+  gap: 18rpx;
+  padding-bottom: 26rpx;
 }
 
-.btn-prev, .btn-next {
+.btn-prev,
+.btn-next {
   flex: 1;
-  background: #fff;
-  border: 3rpx solid #ddd;
-  border-radius: 52rpx;
-  padding: 24rpx 0;
-  font-size: 32rpx;
-  color: #666;
-  font-weight: 500;
   min-height: 96rpx;
+  border-radius: 48rpx;
+  background: #FFFCF8;
+  color: #4A4038;
+  border: 2rpx solid #D9CABA;
+  font-size: 32rpx;
+  font-weight: 800;
 }
 
 .btn-prev[disabled] {
-  opacity: 0.4;
-}
-
-.btn-next::after, .btn-prev::after {
-  border: none;
+  color: #B8ADA2;
+  background: #F4EEE7;
+  border-color: #E8DDD1;
 }
 
 .btn-finish {
   flex: 1;
-  min-height: 100rpx;
 }
